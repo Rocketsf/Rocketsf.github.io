@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
+  <meta charset="UTF-8">
 
-<head>
-  <title>Ledger Book</title>
-  <meta charset="utf-8" />
-  <link rel="stylesheet" href="index.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
-</head>
+  <head>
+    <title>Ledger Book</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+  </head>
 
-<body>
-  <div id="bgimg"></div>
-  <h1>Your Ledger Book</h1>
+  <body>
+    <div id="bgimg"></div>
+    <div id="loginbox">
+      <h1>Your Ledger Book</h1>
+      <button id="authorize_button" style="display: none;">LOGIN</button>
+    </div>
 
-  <!--Add buttons to initiate auth sequence and sign out-->
-  <button id="authorize_button" style="display: none;">LOGIN</button>
-  <button id="signout_button" style="display: none;">Sign Out</button>
 
-  <pre id="content" style="white-space: pre-wrap;"></pre>
+
+
+  </body>
   
-</body>
-<script src="sheetsauth.js"></script>
-<script src="https://apis.google.com/js/api.js"></script>
+  <script type="text/javascript" src="sheetsauth.js"></script>
+  <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
 
 </html>
