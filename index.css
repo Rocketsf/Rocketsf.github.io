@@ -1,0 +1,49 @@
+body, html {
+    height: 95%;
+    margin: auto;
+    position: relative;
+}
+
+#bgimg {
+    background-image: url("bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    transform: scale(1.1);
+    filter: blur(5px);
+    height: 100%;
+    width: 100%;
+}
+
+h1 {
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-family: 'Open Sans', sans-serif;
+    position: absolute;
+}
+
+#authorize_button {
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    color: white;
+    width: 15%;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: rgb(34, 185, 110);
+    border-radius: 25px;
+    border: none;
+    transition-duration: 0.25s;
+    position: absolute;
+}
+
+#authorize_button:hover {
+    background-color: rgb(28, 207, 118);
+}
+
+#authorize_button:active {
+    background-color: rgb(47, 153, 100);
+}

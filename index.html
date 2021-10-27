@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Google Sheets API Quickstart</title>
-    <meta charset="utf-8" />
-  </head>
-  <body>
-    <p>Google Sheets API Quickstart</p>
 
-    <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize_button" style="display: none;">Authorize</button>
-    <button id="signout_button" style="display: none;">Sign Out</button>
+<head>
+  <title>Ledger Book</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+</head>
 
-    <pre id="content" style="white-space: pre-wrap;"></pre>
-  </body>
-  <script src="sheetsauth.js"></script>
-  <script src="https://apis.google.com/js/api.js"></script>
+<body>
+  <div id="bgimg"></div>
+  <h1>Your Ledger Book</h1>
+
+  <!--Add buttons to initiate auth sequence and sign out-->
+  <button id="authorize_button" style="display: none;">LOGIN</button>
+  <button id="signout_button" style="display: none;">Sign Out</button>
+
+  <pre id="content" style="white-space: pre-wrap;"></pre>
+  
+</body>
+<script src="sheetsauth.js"></script>
+<script src="https://apis.google.com/js/api.js"></script>
+
 </html>
