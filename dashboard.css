@@ -1,36 +1,53 @@
 body, html {
-    background-color: rgb(119, 119, 119);
+    background-color: rgb(217, 217, 217);
     margin: auto;
     padding: 0;
     position: relative;
     height: 100%;
 }
 
-#navbar {
-    background-color: rgb(70, 70, 70);
-    float: left;
-    width: 20%;
-    height: 100%;
+#top_bar {
+    background-color: rgb(60, 110, 113);
+    height: 50px;
+    text-align: left;
+    text-indent: 1%;
+    left: 50px;
+    vertical-align: middle;
+    line-height: 50px;
+    color: white;
+    font-family: "Open Sans"; 
+    font-size: 24px;
+}
 
+
+#total_balance {
+    position: absolute;
+    top: 10px;
+    right: 100px;
+    background-color: rgb(49, 72, 73);
+    height: 20px;
+    width: 250px;
+    margin: auto;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 20px;
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 #page {
     float: left;
-    width: 80%;
+    width: 100%;
     height: 100%;
 }
 
 #pageinner {
-    top: 0;
+    top: 0px;
     margin: auto;
     padding: 10px;
 }
 
-#navbarinner {
-    margin: auto;
-    padding: 10px;
-}
- 
 p {
     margin: auto;
 }
@@ -40,14 +57,64 @@ pre {
 }
 
 #signout_button {
-    float: right;
     margin: auto;
+    display: inline-block;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(49, 72, 73);
+    color: white;
+    transition-duration: 0.2s;
 }
 
-#addaccount {
-    width: 100%;
-    height: 40px;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: bold;
-    font-size: 14px;
+#signout_button:hover {
+    transition-duration: 0.2s;
+    background-color: rgb(255, 255, 255);
+    color: black;
 }
+
+#signout_button:active {
+    transition-duration: 0.2s;
+    background-color: rgb(38, 51, 53);
+    color: white;
+}
+
+.tile {
+    background-color: rgb(40, 75, 99);
+    height: 75px;
+    border-radius: 10px;
+    padding-left: 10px;
+    vertical-align: middle;
+    text-align: left;
+    margin-top: 10px;
+    width: 100%;
+    border: none;
+    transition-duration: 0.2s;
+}
+
+.tile:hover {
+    transition-duration: 0.2s;
+    background-color: rgb(37, 99, 141);
+}
+
+.tile:active {
+    transition-duration: 0.2s;
+    background-color: rgb(29, 48, 61);
+}
+
+
+#name {
+    display: block;
+}
+
+.info {
+    padding: 8px;
+    font-family: 'Open Sans';
+    font-size: 14px;
+    color: white;
+    display: inline-block;
+}
+
