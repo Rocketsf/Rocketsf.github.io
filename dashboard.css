@@ -82,7 +82,7 @@ pre {
     color: white;
 }
 
-.tile {
+#tile {
     background-color: rgb(40, 75, 99);
     height: 75px;
     border-radius: 10px;
@@ -95,12 +95,12 @@ pre {
     transition-duration: 0.2s;
 }
 
-.tile:hover {
+#tile:hover {
     transition-duration: 0.2s;
     background-color: rgb(37, 99, 141);
 }
 
-.tile:active {
+#tile:active {
     transition-duration: 0.2s;
     background-color: rgb(29, 48, 61);
 }
@@ -116,5 +116,29 @@ pre {
     font-size: 14px;
     color: white;
     display: inline-block;
+}
+
+#addaccount {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    border: none;
+    border-radius: 50px;
+    width: 100px;
+    height: 100px;
+    font-size: 64px;
+    background-color: rgb(40, 75, 99);
+    color: white;
+    transition-duration: 0.1s;
+}
+
+#addaccount:hover {
+    transition-duration: 0.2s;
+    background-color: rgb(37, 99, 141);
+}
+
+#addaccount:active {
+    transition-duration: 0.1s;
+    background-color: rgb(29, 48, 61);
 }
 

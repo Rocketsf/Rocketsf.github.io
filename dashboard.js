@@ -1,27 +1,19 @@
-function appendPre(message) {
-    var pre = document.getElementById('content');
-    var textContent = document.createTextNode(message + '\n');
-    pre.appendChild(textContent);
-}
+var sheets, sheetData;
+var tile = document.getElementById("tile");
+var pageInner = document.getElementById("pageinner");
+var addButton = document.getElementById("addaccount");
 
-function loadData() {
+addButton.onclick = showAddAccount;
+
+function loadData(sheetName) {
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        range: 'A1:E2',
+        range: sheetName+"!A:E"
     }).then(function (response) {
-        var range = response.result;
-        var row = range.values;
-
-        if (range.values.length > 0) {
-            appendPre('DATA RETRIEVED:');
-            for (i = 0; i < row.length; i++) {
-                appendPre(row[i]);
-            }
-        } else {
-            appendPre('No data found.');
-        }
+        sheetData = response;
+        console.log(sheetData);
     }, function (response) {
-        appendPre('Error: ' + response.result.error.message);
+        console.log(response.result.error.message);
     });
 }
 
@@ -40,6 +32,7 @@ function createSheet(titleName) {
         console.log(response); 
     });
     setTimeout(function() { updateSheet(titleName, [["Date"],["Particular"],["Credit"],["Debit"],["Balance"]], "A1:E1"); }, 1000);
+    window.location.reload();
 }
 
 function updateSheet(sheetName, data, cellRange) {
@@ -57,10 +50,40 @@ function updateSheet(sheetName, data, cellRange) {
     });
 }
 
+
+//Gets all the sheets
 function getSheets() {
     gapi.client.sheets.spreadsheets.get({
         spreadsheetId: SPREADSHEET_ID
     }).then((response) => {
-          return response.result.sheets;
-    });
+        sheets = response.result.sheets;
+    });    
+}
+
+function openSheet() {
+    setTimeout(
+        function() { 
+            console.log(sheets); 
+            console.log("SHEET COUNT = " + sheets.length);
+            pageInner.removeChild(pageInner.childNodes[1]);
+            for (i = 0; i < sheets.length; i++) {
+                console.log("sheet" + i + " sheetId = " + sheets[i].properties.sheetId);
+                console.log("sheet" + i + " title = " + sheets[i].properties.title);
+                
+                var clone = tile.cloneNode(true);
+                clone.childNodes.item(1).textContent = sheets[i].properties.title;
+    
+                loadData(sheets[i].properties.title);
+                
+                //clone.childNodes.item(2).textContent = sheetData.
+                pageInner.appendChild(clone);
+                
+            }
+        }, 
+    500);
+}
+
+function showAddAccount() {
+    var input = prompt("Enter a new account name");
+    if (input != null) createSheet(input);
 }

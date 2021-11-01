@@ -38,7 +38,9 @@ function initClient() {
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
         signoutButton.style.display = 'inline-block';
-        loadData();
+        getSheets();
+        setTimeout(function() { openSheet(); }, 500);
+        
     } else {
         window.location.replace("/index.html")
     }
