@@ -1,19 +1,19 @@
-var sheets, sheetData;
-var tile = document.getElementById("tile");
-var pageInner = document.getElementById("pageinner");
-var addButton = document.getElementById("addaccount");
+let sheets;
+let tile = document.getElementById("tile");
+let pageInner = document.getElementById("pageinner");
+let addButton = document.getElementById("addaccount");
+let accounts = [];
+let currentTable = "none";
 
 addButton.onclick = showAddAccount;
 
 function loadData(sheetName) {
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        range: sheetName+"!A:E"
+        range: sheetName+"!A:F"
     }).then(function (response) {
-        sheetData = response;
-        console.log(sheetData);
-    }, function (response) {
-        console.log(response.result.error.message);
+        console.log(response);
+        accounts.push(response);
     });
 }
 
@@ -31,8 +31,11 @@ function createSheet(titleName) {
     .then((response) => {
         console.log(response); 
     });
-    setTimeout(function() { updateSheet(titleName, [["Date"],["Particular"],["Credit"],["Debit"],["Balance"]], "A1:E1"); }, 1000);
-    window.location.reload();
+    setTimeout(function() { 
+        updateSheet(titleName, [["Date"],["Particular"],["Credit"],["Debit"],["Balance"],[sheets.length + 1]], "A1:F1");
+        window.location.reload(); 
+    }, 1000);
+    
 }
 
 function updateSheet(sheetName, data, cellRange) {
@@ -55,35 +58,64 @@ function updateSheet(sheetName, data, cellRange) {
 function getSheets() {
     gapi.client.sheets.spreadsheets.get({
         spreadsheetId: SPREADSHEET_ID
-    }).then((response) => {
-        sheets = response.result.sheets;
+    }).then(function(response) {
+        sheets = JSON.parse(JSON.stringify(response.result.sheets));
+        console.log("got sheets");
     });    
 }
 
 function openSheet() {
-    setTimeout(
-        function() { 
-            console.log(sheets); 
-            console.log("SHEET COUNT = " + sheets.length);
-            pageInner.removeChild(pageInner.childNodes[1]);
-            for (i = 0; i < sheets.length; i++) {
-                console.log("sheet" + i + " sheetId = " + sheets[i].properties.sheetId);
-                console.log("sheet" + i + " title = " + sheets[i].properties.title);
-                
-                var clone = tile.cloneNode(true);
-                clone.childNodes.item(1).textContent = sheets[i].properties.title;
+    console.log(sheets); 
+    console.log("SHEET COUNT = " + sheets.length);
+    pageInner.removeChild(pageInner.childNodes[1]);
+
+    for (i = 0; i < sheets.length; i++) {
+        var clone = tile.cloneNode(true);
+        pageInner.appendChild(clone);
+    }
+    setTimeout(function() {
+        setTileValues();
+    }, 300);
     
-                loadData(sheets[i].properties.title);
-                
-                //clone.childNodes.item(2).textContent = sheetData.
-                pageInner.appendChild(clone);
-                
-            }
-        }, 
-    500);
 }
 
 function showAddAccount() {
     var input = prompt("Enter a new account name");
     if (input != null) createSheet(input);
+}
+
+function setTileValues() {
+    accounts.sort((a, b) => {
+        return parseInt(a.result.values[0][5] - parseInt(b.result.values[0][5]));
+    }); 
+
+    for (i = 0; i < sheets.length; i++) {
+        pageInner.children[i].setAttribute("style", "display: block");
+        let credit = 0, debit = 0, balance = 0;
+        
+        for (j = 1; j < accounts[i].result.values.length; j++) {
+            credit += parseFloat(accounts[i].result.values[j][2]);
+        }
+        for (j = 1; j < accounts[i].result.values.length; j++) {
+            debit += parseFloat(accounts[i].result.values[j][3]);
+        }
+        for (j = 1; j < accounts[i].result.values.length; j++) {
+            balance += parseFloat(accounts[i].result.values[j][4]);
+        }
+        for (j = 0; j < pageInner.childNodes.length; j++) {
+            pageInner.children[i].children[0].textContent = sheets[i].properties.title;
+            pageInner.children[i].children[1].textContent = "Credit: " + credit;
+            pageInner.children[i].children[2].textContent = "Debit: " + debit;
+            pageInner.children[i].children[3].textContent = "Balance: " + balance;
+        }
+    } 
+}
+
+function showTable(btn) {
+    currentTable = btn.children[0].innerHTML;
+    localStorage.setItem("clickedTile", currentTable);
+    for (i = 0; i < accounts.length; i++) {
+        localStorage.setItem("account"+i, JSON.stringify(accounts[i]));
+    }
+    window.location.replace("/tablepage.html");
 }

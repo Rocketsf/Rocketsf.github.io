@@ -2,35 +2,36 @@
 <html>
     <meta charset="UTF-8">
     <head>
+        <link rel="stylesheet" href="tablepage.css">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="dashboard.css">
     </head>
 
     <body>
         <div id="page">
             <div id= top_bar>
+                <button id="back">BACK</button>
                 <p id="dashboard" class="bar">DASHBOARD</p>
-                <p id="total_balance" class="bar">TOTAL BALANCE: </p>
                 <button id="signout_button" class="bar">SIGN OUT</button>
             </div>
             
             <div id="pageinner">
-                <button id="tile" onclick="showTable(this)" style="display: none;">
-                    <p id="name" class="info">NAME</p>
-                    <p id="credit" class="info">Credit: 0</p>
-                    <p id="debit" class="info">Debit: 0</p>
-                    <p id="balance" class="info">Balance: 0</p>
-                </button>
+                <table id="tabledata">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
             </div>
-            <button id="addaccount">+</button>
-            
         </div>
+        
     </body>
 
     <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
-    <script type="text/javascript" src="sheetsauth.js"></script>
-    <script type="text/javascript" src="sheetdeauth.js"></script>
     <script type="text/javascript" src="dashboard.js"></script>
+    <script type="text/javascript" src="tablepage.js"></script>
 </html>

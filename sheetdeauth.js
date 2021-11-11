@@ -26,6 +26,7 @@ function initClient() {
         // Handle the initial sign-in state.
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
         signoutButton.onclick = handleSignoutClick;
+        
     }, function (error) {
         appendPre(JSON.stringify(error, null, 2));
     });
@@ -39,8 +40,12 @@ function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
         signoutButton.style.display = 'inline-block';
         getSheets();
-        setTimeout(function() { openSheet(); }, 500);
-        
+        setTimeout(function() { 
+            for (i = 0; i < sheets.length; i++) {
+                loadData(sheets[i].properties.title);
+            }
+         }, 1000);
+         setTimeout(function() { openSheet() }, 1500);
     } else {
         window.location.replace("/index.html")
     }
