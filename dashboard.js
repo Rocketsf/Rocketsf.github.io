@@ -74,6 +74,12 @@ function openSheet() {
         pageInner.appendChild(clone);
     }
     setTimeout(function() {
+        accounts.sort((a, b) => {
+            return parseInt(a.result.values[0][5] - parseInt(b.result.values[0][5]));
+        });
+        for (i = 0; i < accounts.length; i++) {
+            pageInner.children[i].setAttribute("style", "display: bloack");
+        } 
         setTileValues();
     }, 300);
     
@@ -85,12 +91,10 @@ function showAddAccount() {
 }
 
 function setTileValues() {
-    accounts.sort((a, b) => {
-        return parseInt(a.result.values[0][5] - parseInt(b.result.values[0][5]));
-    }); 
+    
 
     for (i = 0; i < sheets.length; i++) {
-        pageInner.children[i].setAttribute("style", "display: block");
+        
         let credit = 0, debit = 0, balance = 0;
         
         for (j = 1; j < accounts[i].result.values.length; j++) {
