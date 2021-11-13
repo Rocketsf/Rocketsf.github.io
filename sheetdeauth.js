@@ -47,7 +47,7 @@ function updateSigninStatus(isSignedIn) {
          }, 1000);
          setTimeout(function() { openSheet() }, 1500);
     } else {
-        window.location.replace("/index.html")
+        window.location = "/index.html";
     }
 }
 

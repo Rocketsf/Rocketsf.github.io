@@ -78,7 +78,7 @@ function openSheet() {
             return parseInt(a.result.values[0][5] - parseInt(b.result.values[0][5]));
         });
         for (i = 0; i < accounts.length; i++) {
-            pageInner.children[i].setAttribute("style", "display: bloack");
+            pageInner.children[i].setAttribute("style", "display: block");
         } 
         setTileValues();
     }, 300);
@@ -121,5 +121,5 @@ function showTable(btn) {
     for (i = 0; i < accounts.length; i++) {
         localStorage.setItem("account"+i, JSON.stringify(accounts[i]));
     }
-    window.location.replace("/tablepage.html");
+    window.location = "/tablepage.html";
 }

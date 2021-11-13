@@ -39,7 +39,7 @@ function initClient() {
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
         authorizeButton.style.display = 'none';
-        window.location.replace("/dashboard.html")
+        window.location = "/dashboard.html";
     } else {
         authorizeButton.style.display = 'block';
     }
