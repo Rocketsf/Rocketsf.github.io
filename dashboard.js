@@ -91,8 +91,6 @@ function showAddAccount() {
 }
 
 function setTileValues() {
-    
-
     for (i = 0; i < sheets.length; i++) {
         
         let credit = 0, debit = 0, balance = 0;
@@ -117,6 +115,7 @@ function setTileValues() {
 
 function showTable(btn) {
     currentTable = btn.children[0].innerHTML;
+    localStorage.clear();
     localStorage.setItem("clickedTile", currentTable);
     for (i = 0; i < accounts.length; i++) {
         localStorage.setItem("account"+i, JSON.stringify(accounts[i]));
