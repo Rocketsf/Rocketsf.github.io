@@ -3,6 +3,11 @@ let sheetValues = [];
 let currentValues, currentSheet;
 let tileName;
 let editWindow = document.getElementById("editwindow");
+let editRowWindow = document.getElementById("editrow");
+let date = document.getElementById("dateinput");
+let particular = document.getElementById("particularinput");
+let credit = document.getElementById("creditinput");
+let debit = document.getElementById("debitinput");
 let currentRow, rowId = 0;
 
 window.onload = function() {
@@ -71,8 +76,70 @@ function openEdit(row, id) {
     rowId = parseInt(id);
 }
 
-function editRow() {
+function applyEdit() {
+    currentRow.children[0].innerHTML = date.value;
+    currentRow.children[1].innerHTML = particular.value;
+    currentRow.children[2].innerHTML = credit.value;
+    currentRow.children[3].innerHTML = debit.value;
+    currentRow.children[4].innerHTML = (parseFloat(credit.value) - parseFloat(debit.value));
 
+    updateSheet(
+                tileName, 
+                [[currentRow.children[0].innerHTML],
+                [currentRow.children[1].innerHTML],
+                [currentRow.children[2].innerHTML],
+                [currentRow.children[3].innerHTML],
+                [currentRow.children[4].innerHTML]], 
+                "A"+(rowId+1)+":E"+(rowId+1)
+                );
+
+
+    //let sheetId = -1;
+
+    // for (i = 0; i < sheets.length; i++) {
+    //     if (sheets[i].properties.title == tileName) {
+    //         sheetId = sheets[i].properties.sheetId;
+    //     }
+    // }
+
+    // let params = {
+    //     spreadsheetId: SPREADSHEET_ID,
+    //     range: tileName+"!A"+(rowId+1)+":"
+    // }
+    
+    // let body = {
+    //     requests: [{
+    //         deleteDimension: {
+    //             range: {
+    //                 sheetId: sheetId,
+    //                 dimension: "ROWS",
+    //                 startIndex: rowId,
+    //                 endIndex: rowId + 1 
+    //             }
+    //         }
+    //     }],
+    // }
+    
+    // let request = gapi.client.sheets.spreadsheets.values.update(params, body);
+    // request.then(function (response) {
+    //     console.log(response);
+    // }, function(reason) {
+    //     console.error(reason.result.error.message);
+    // });
+
+    closeEditRow();
+    closeEdit();
+}
+
+function editRow() {
+    editRowWindow.setAttribute("style", "display: block");
+
+    date.setAttribute("value", currentRow.children[0].innerHTML);
+    particular.setAttribute("value", currentRow.children[1].innerHTML);
+    credit.setAttribute("value", currentRow.children[2].innerHTML);
+    debit.setAttribute("value", currentRow.children[3].innerHTML);
+    
+    console.log(currentRow);
 }
 
 function deleteRow() {
@@ -127,4 +194,8 @@ function deleteRow() {
 
 function closeEdit() {
     editWindow.setAttribute("style", "display: none");
+}
+
+function closeEditRow() {
+    editRowWindow.setAttribute("style", "display: none");
 }

@@ -114,7 +114,7 @@ tr:hover {
     cursor: pointer;
 }
 
-#editwindow {
+#editwindow, #editrow {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -125,11 +125,20 @@ tr:hover {
     border-radius: 10px;
     border-style: solid;
     border-color: rgb(49, 72, 73);
-    background-color: rgba(60, 110, 113, 0.95);
+    background-color: rgba(60, 110, 113, 0.975);
+}
+
+#editrow {
+    height: 400px;
+}
+
+#apply, #canceleditrow {
+    display: inline-block;
+    width: 200px;
+    margin-left: 30px;
 }
 
 .editbtn {
-   
     padding: 10px;
     width: 80%;
     display: block;
@@ -150,12 +159,12 @@ h1 {
     color: white;
 }
 
-#delete {
+#delete, #canceleditrow {
     background-color: rgb(187, 70, 70);
     transition-duration: 0.2s;
 }
 
-#delete:hover {
+#delete:hover, #canceleditrow:hover {
     background-color: rgb(255, 51, 51);
     transition-duration: 0.2s;
 }
@@ -170,12 +179,26 @@ h1 {
     transition-duration: 0.2s;
 }
 
-#edit {
+#edit, #apply {
     background-color: rgb(90, 172, 122);
     transition-duration: 0.2s;
 }
 
-#edit:hover {
+#edit:hover, #apply:hover {
     background-color: rgb(59, 255, 134);
     transition-duration: 0.2s;
+}
+
+.input, label {
+    margin-left: 30px;
+}
+
+label {
+    font-family: "Open Sans";
+    font-size: 14px;
+    color: white;
+}
+
+.daterow, .creditrow, .debitrow, .balancerow {
+    white-space: nowrap;
 }
