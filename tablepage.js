@@ -124,9 +124,9 @@ function addRow() {
 }
 
 function deleteRow() {
-    let input = prompt("Are you sure you want to delete this row?\nType 'delete' to confirm deletion.");
+    let input = confirm("Are you sure you want to delete this row?");
     
-    if (input == "delete") {
+    if (input == true) {
 
         let sheetId = -1;
 

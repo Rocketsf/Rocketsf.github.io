@@ -2,10 +2,13 @@ let sheets;
 let tile = document.getElementById("tile");
 let pageInner = document.getElementById("pageinner");
 let addButton = document.getElementById("addaccount");
+let searchBar = document.getElementById("search");
+let submitBtn = document.getElementById("submitbtn");
 let accounts = [];
 let currentTable = "none";
 
 addButton.onclick = showAddAccount;
+searchBar.addEventListener('input', search);
 
 function loadData(sheetName) {
     gapi.client.sheets.spreadsheets.values.get({
@@ -121,4 +124,17 @@ function showTable(btn) {
         localStorage.setItem("account"+i, JSON.stringify(accounts[i]));
     }
     window.location = "/tablepage.html";
+}
+
+function search(e) {
+    console.log(e.target.value);
+
+    for (i = 0; i < pageInner.children.length; i++) {
+        if (pageInner.children[i].children[0].innerHTML.includes(e.target.value)){
+            if (!(pageInner.children[i].children[0].innerHTML == "NAME" && pageInner.children[i].style.display == "none")) {
+                pageInner.children[i].setAttribute("style", "display: block");
+            }
+        }
+        else pageInner.children[i].setAttribute("style", "display: none");
+    }
 }
