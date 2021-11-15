@@ -129,7 +129,7 @@ function showTable(btn) {
 
 function search(e) {
     for (i = 0; i < pageInner.children.length; i++) {
-        if (pageInner.children[i].children[0].innerHTML.indexOf(e.target.value) != -1){
+        if (pageInner.children[i].children[0].innerHTML.toLowerCase().includes(e.target.value.toLowerCase())){
             if (!(pageInner.children[i].children[0].innerHTML == "NAME" && pageInner.children[i].style.display == "none")) {
                 pageInner.children[i].setAttribute("style", "display: block");
             }
@@ -141,7 +141,7 @@ function search(e) {
 function sortTiles() {
     let sortedTiles = Array.from(pageInner.children);
     sortedTiles.sort(function(a, b) {
-        return a.children[0].textContent < b.children[0].textContent ? -1 : 1
+        return a.children[0].textContent.toLowerCase() < b.children[0].textContent.toLowerCase() ? -1 : 1
     });
 
     for (i = 0; i < sortedTiles.length; i++) {
