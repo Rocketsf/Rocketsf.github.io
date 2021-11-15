@@ -8,7 +8,6 @@ body, html {
 
 #dashboard {
     left: 100px;
-    
 }
 
 #top_bar {
@@ -24,7 +23,7 @@ body, html {
     font-size: 24px;
 }
 
-#back {
+.topbtn {
     background-color: rgb(49, 72, 73);
     margin: auto;
     display: inline-block;
@@ -43,16 +42,25 @@ body, html {
     line-height: 20px;
 }
 
-#back:hover {
+.topbtn:hover {
     transition-duration: 0.2s;
     background-color: rgb(255, 255, 255);
     color: black;
 }
 
-#back:active {
+.topbtn:active {
     transition-duration: 0.2s;
     background-color: rgb(38, 51, 53);
     color: white;
+}
+
+#addrowbtn {
+    right: 15px;
+    left: auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    font-size: 20px; 
 }
 
 #page {
@@ -69,32 +77,6 @@ body, html {
 
 p {
     margin: auto;
-}
-
-#signout_button {
-    margin: auto;
-    display: inline-block;
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    height: 30px;
-    border: none;
-    border-radius: 5px;
-    background-color: rgb(49, 72, 73);
-    color: white;
-    transition-duration: 0.2s;
-}
-
-#signout_button:hover {
-    transition-duration: 0.2s;
-    background-color: rgb(255, 255, 255);
-    color: black;
-}
-
-#signout_button:active {
-    transition-duration: 0.2s;
-    background-color: rgb(38, 51, 53);
-    color: white;
 }
 
 table, th, td {
@@ -114,7 +96,7 @@ tr:hover {
     cursor: pointer;
 }
 
-#editwindow, #editrow {
+#editwindow, #editrow, #addrowwindow {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -128,11 +110,15 @@ tr:hover {
     background-color: rgba(60, 110, 113, 0.975);
 }
 
+#addrowwindow {
+    height: 400px; 
+}
+
 #editrow {
     height: 400px;
 }
 
-#apply, #canceleditrow {
+#apply, #canceleditrow, #newapply, #newcanceleditrow {
     display: inline-block;
     width: 200px;
     margin-left: 30px;
@@ -159,12 +145,12 @@ h1 {
     color: white;
 }
 
-#delete, #canceleditrow {
+#delete, #canceleditrow, #newcanceleditrow {
     background-color: rgb(187, 70, 70);
     transition-duration: 0.2s;
 }
 
-#delete:hover, #canceleditrow:hover {
+#delete:hover, #canceleditrow:hover, #newcanceleditrow:hover {
     background-color: rgb(255, 51, 51);
     transition-duration: 0.2s;
 }
@@ -179,12 +165,12 @@ h1 {
     transition-duration: 0.2s;
 }
 
-#edit, #apply {
+#edit, #apply, #newapply {
     background-color: rgb(90, 172, 122);
     transition-duration: 0.2s;
 }
 
-#edit:hover, #apply:hover {
+#edit:hover, #apply:hover, #newapply:hover {
     background-color: rgb(59, 255, 134);
     transition-duration: 0.2s;
 }
