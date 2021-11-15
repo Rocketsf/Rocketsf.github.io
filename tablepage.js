@@ -14,10 +14,12 @@ let particular = document.getElementById("particularinput");
 let newParticular = document.getElementById("newparticularinput");
 
 let credit = document.getElementById("creditinput");
-let newCredit = document.getElementById("newcreditinput");
+let newCredit = document.getElementById("addcreditinput");
+let creditRadio = document.getElementById("radiocredit");
 
 let debit = document.getElementById("debitinput");
-let newDebit = document.getElementById("newdebitinput");
+let newDebit = document.getElementById("adddebitinput");
+let debitRadio = document.getElementById("radiodebit");
 
 let currentRow, rowId = 0;
 
@@ -77,8 +79,6 @@ function putTableData() {
             table.children[i].children[0].children[j].innerHTML = currentValues.result.values[i][j];
         }
     }
-
-    
 }
 
 function openEdit(row, id) {
@@ -92,7 +92,7 @@ function applyEdit() {
     currentRow.children[1].innerHTML = particular.value;
     currentRow.children[2].innerHTML = credit.value;
     currentRow.children[3].innerHTML = debit.value;
-    currentRow.children[4].innerHTML = (parseFloat(credit.value) - parseFloat(debit.value));
+    currentRow.children[4].innerHTML = (parseFloat(credit.value) - parseFloat(debit.value) + parseFloat(document.getElementById(rowId - 1).children[4].innerHTML));
 
     updateSheet(
                 tileName, 
@@ -176,32 +176,29 @@ function deleteRow() {
 function applyNewRow() {
     if ((newDate.value != "" && newCredit.value != "") || (newDate.value != "" && newDebit.value != "")) {
         console.log("made new row");
-        let newRow = table.insertRow(table.children.length-1);
-        
-        let cell0 = newRow.insertCell(0);
-        let cell1 = newRow.insertCell(1);
-        let cell2 = newRow.insertCell(2);
-        let cell3 = newRow.insertCell(3);
-        let cell4 = newRow.insertCell(4);
-
+        let newRow = table.children[table.children.length-1].cloneNode(true);
+        let prevBalance = document.getElementById(table.children.length-1).children[4].innerHTML;
+        console.log(prevBalance);
+        if (prevBalance == "Balance") prevBalance = 0;
         if (newCredit.value == "") newCredit.value = 0;
         if (newDebit.value == "") newDebit.value = 0;
 
-        cell0.innerHTML = newDate.value;
-        cell1.innerHTML = newParticular.value;
-        cell2.innerHTML = newCredit.value;
-        cell3.innerHTML = newDebit.value;
-        cell4.innerHTML = (parseFloat(newCredit.value) - parseFloat(newDebit.value));
+        newRow.firstChild.childNodes.item(1).innerHTML = newDate.value;
+        newRow.firstChild.childNodes.item(3).innerHTML = newParticular.value;
+        newRow.firstChild.childNodes.item(5).innerHTML = newCredit.value;
+        newRow.firstChild.childNodes.item(7).innerHTML = newDebit.value;
+        newRow.firstChild.childNodes.item(9).innerHTML = (parseFloat(newCredit.value) - parseFloat(newDebit.value) + parseFloat(prevBalance));
 
+        newRow.firstChild.id = table.children.length;
         table.appendChild(newRow);
 
         updateSheet(
             tileName, 
-            [[cell0.innerHTML],
-            [cell1.innerHTML],
-            [cell2.innerHTML],
-            [cell3.innerHTML],
-            [cell4.innerHTML]], 
+            [[newRow.firstChild.childNodes.item(1).innerHTML],
+            [newRow.firstChild.childNodes.item(3).innerHTML],
+            [newRow.firstChild.childNodes.item(5).innerHTML],
+            [newRow.firstChild.childNodes.item(7).innerHTML],
+            [newRow.firstChild.childNodes.item(9).innerHTML]], 
             "A"+(table.children.length)+":E"+(table.children.length)
         );
 
@@ -223,3 +220,50 @@ function closeEditRow() {
 function closeNewRow() {
     addRowWindow.setAttribute("style", "display:none");
 }
+
+function editRadioChange(r) {
+    let clabel = document.getElementById("creditlabel");
+    let dlabel = document.getElementById("debitlabel");
+    let cinput = document.getElementById("creditinput");
+    let dinput = document.getElementById("debitinput");
+
+
+    if (r.value == "chosecredit") {
+        clabel.setAttribute("style", "display: inline-block");
+        cinput.setAttribute("style", "display: inline-block");
+        dlabel.setAttribute("style", "display: none");
+        dinput.setAttribute("style", "display: none");
+        debit.value = 0;
+    }
+    else if (r.value == "chosedebit") {
+        clabel.setAttribute("style", "display: none");
+        dlabel.setAttribute("style", "display: inline-block");
+        cinput.setAttribute("style", "display: none");
+        dinput.setAttribute("style", "display: inline-block");
+        credit.value = 0;
+    }
+}
+
+function addRadioChange(r) {
+    let clabel = document.getElementById("addcreditlabel");
+    let dlabel = document.getElementById("adddebitlabel");
+    let cinput = document.getElementById("addcreditinput");
+    let dinput = document.getElementById("adddebitinput");
+
+    if (r.value == "chosecredit") {
+        clabel.setAttribute("style", "display: inline-block");
+        cinput.setAttribute("style", "display: inline-block");
+        dlabel.setAttribute("style", "display: none");
+        dinput.setAttribute("style", "display: none");
+        newDebit.value = 0;
+    }
+    else if (r.value == "chosedebit") {
+        clabel.setAttribute("style", "display: none");
+        dlabel.setAttribute("style", "display: inline-block");
+        cinput.setAttribute("style", "display: none");
+        dinput.setAttribute("style", "display: inline-block");
+        newCredit.value = 0;
+    }
+}
+
+
