@@ -113,7 +113,17 @@ function setTileValues() {
             pageInner.children[i].children[2].textContent = "Debit: " + debit;
             pageInner.children[i].children[3].textContent = "Balance: " + balance;
         }
-    } 
+    }
+
+    let sortedTiles = Array.from(pageInner.children);
+    sortedTiles.sort(function(a, b) {
+        return a.children[0].textContent < b.children[0].textContent ? -1 : 1
+    });
+
+    for (i = 0; i < sortedTiles.length; i++) {
+        pageInner.children[0].remove;
+        pageInner.appendChild(sortedTiles[i]);
+    }
 }
 
 function showTable(btn) {
@@ -127,8 +137,6 @@ function showTable(btn) {
 }
 
 function search(e) {
-    console.log(e.target.value);
-
     for (i = 0; i < pageInner.children.length; i++) {
         if (pageInner.children[i].children[0].innerHTML.includes(e.target.value)){
             if (!(pageInner.children[i].children[0].innerHTML == "NAME" && pageInner.children[i].style.display == "none")) {
