@@ -9,6 +9,7 @@ let editTileWindow = document.getElementById("edittilewindow");
 let accounts = [];
 let currentTable = "none";
 let currentTile;
+let totalBalance = document.getElementById("total_balance");
 
 addButton.onclick = showAddAccount;
 searchBar.addEventListener('input', search);
@@ -103,6 +104,9 @@ function showAddAccount() {
 }
 
 function setTileValues() {
+
+    let total = 0;
+
     for (i = 0; i < sheets.length; i++) {
         
         let credit = 0, debit = 0, balance = 0;
@@ -122,7 +126,9 @@ function setTileValues() {
         pageInner.children[i].children[2].textContent = "Debit: " + debit;
         pageInner.children[i].children[3].textContent = "Balance: " + balance;
         
+        total += balance;
     }
+    totalBalance.innerHTML = "TOTAL BALANCE: " + total;
     sortTiles();
 }
 

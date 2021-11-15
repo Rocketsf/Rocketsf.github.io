@@ -3,6 +3,8 @@ let sheetValues = [];
 let currentValues, currentSheet;
 let tileName;
 
+let tableBalance = document.getElementById("tablebalance");
+
 let editWindow = document.getElementById("editwindow");
 let editRowWindow = document.getElementById("editrow");
 let addRowWindow = document.getElementById("addrowwindow");
@@ -79,6 +81,8 @@ function putTableData() {
             table.children[i].children[0].children[j].innerHTML = currentValues.result.values[i][j];
         }
     }
+
+    updateBalance();
 }
 
 function openEdit(row, id) {
@@ -106,6 +110,7 @@ function applyEdit() {
 
     closeEditRow();
     closeEdit();
+    updateBalance();
 }
 
 function editRow() {
@@ -170,6 +175,8 @@ function deleteRow() {
         }, function(reason) {
             console.error(reason.result.error.message);
         });
+
+        updateBalance();
     }
 }
 
@@ -203,6 +210,7 @@ function applyNewRow() {
         );
 
         closeNewRow();
+        updateBalance();
     }
     else if (newDate.value == "" || (newDate.value != "" && newCredit.value == "" ) || (newDate.value != "" && newDebit == "")) {
         alert("Please input a new date and credit or debit value.");
@@ -266,4 +274,6 @@ function addRadioChange(r) {
     }
 }
 
-
+function updateBalance() {
+    tableBalance.innerHTML = "TOTAL BALANCE: " + table.lastChild.children[0].children[4].innerHTML;
+}
