@@ -90,7 +90,6 @@ pre {
     vertical-align: middle;
     text-align: left;
     margin-top: 10px;
-    width: 100%;
     border: none;
     transition-duration: 0.2s;
 }
@@ -106,17 +105,43 @@ pre {
     background-color: rgb(29, 48, 61);
 }
 
-
 #name {
     display: block;
 }
 
 .info {
-    padding: 8px;
+    padding: 9px;
     font-family: 'Open Sans';
     font-size: 14px;
     color: white;
     display: inline-block;
+}
+
+.edittilebtn {
+    float: right;
+    position: relative;
+    bottom: 25px;
+    right: 20px;
+    border: none;
+    border-radius: 50px;
+    background-color: rgba(0, 0, 0, 0);
+    width: 50px;
+    height: 50px;
+    transition-duration: 0.2s;
+}
+
+.edittilebtn:hover {
+    position: relative;
+    background-color: rgb(156, 156, 156);
+    transition-duration: 0.2s;
+    transform: rotate(45deg);
+}
+
+i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #addaccount {
@@ -157,4 +182,69 @@ pre {
     padding-left: 10px;
 }
 
+#edittilewindow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 300px;
+    background-color: white;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: rgb(49, 72, 73);
+    background-color: rgba(60, 110, 113, 0.975);
+}
 
+
+h1 {
+    text-align: center;
+    font: bold 28px "Open Sans";
+    color: white;
+}
+
+.editbtn {
+    padding: 10px;
+    width: 80%;
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    font: bold 16px "Open Sans";
+    border-radius: 10px;
+    border-style: solid;
+    border-color: rgb(38, 51, 53);
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+#rename {
+    background-color: rgb(56, 109, 170);
+    color: white;
+    transition-duration: 0.2s;
+}
+
+#rename:hover {
+    background-color: rgb(29, 123, 201);
+    transition-duration: 0.2s;
+}
+
+#delete {
+    background-color: rgb(187, 70, 70);
+    transition-duration: 0.2s;
+}
+
+#delete:hover {
+    background-color: rgb(255, 51, 51);
+    transition-duration: 0.2s;
+}
+
+#cancel {
+    background-color: rgb(158, 158, 158);
+    transition-duration: 0.2s;
+}
+
+#cancel:hover {
+    background-color: rgb(255, 255, 255);
+    transition-duration: 0.2s;
+}

@@ -4,8 +4,11 @@ let pageInner = document.getElementById("pageinner");
 let addButton = document.getElementById("addaccount");
 let searchBar = document.getElementById("search");
 let submitBtn = document.getElementById("submitbtn");
+let editTileBtn = document.getElementById("edittile");
+let editTileWindow = document.getElementById("edittilewindow");
 let accounts = [];
 let currentTable = "none";
+let currentTile;
 
 addButton.onclick = showAddAccount;
 searchBar.addEventListener('input', search);
@@ -82,6 +85,12 @@ function openSheet() {
         });
         for (i = 0; i < accounts.length; i++) {
             pageInner.children[i].setAttribute("style", "display: block");
+            pageInner.children[i].addEventListener('click', function(e) {
+                if (e.target.innerHTML != "settings") {
+                    showTable(e.currentTarget);
+                }
+                else showEditTileWindow(e.currentTarget);
+            })
         } 
         setTileValues();
     }, 300);
@@ -107,12 +116,12 @@ function setTileValues() {
         for (j = 1; j < accounts[i].result.values.length; j++) {
             balance += parseFloat(accounts[i].result.values[j][4]);
         }
-        for (j = 0; j < pageInner.childNodes.length; j++) {
-            pageInner.children[i].children[0].textContent = sheets[i].properties.title;
-            pageInner.children[i].children[1].textContent = "Credit: " + credit;
-            pageInner.children[i].children[2].textContent = "Debit: " + debit;
-            pageInner.children[i].children[3].textContent = "Balance: " + balance;
-        }
+
+        pageInner.children[i].children[0].textContent = sheets[i].properties.title;
+        pageInner.children[i].children[1].textContent = "Credit: " + credit;
+        pageInner.children[i].children[2].textContent = "Debit: " + debit;
+        pageInner.children[i].children[3].textContent = "Balance: " + balance;
+        
     }
     sortTiles();
 }
@@ -148,4 +157,76 @@ function sortTiles() {
         pageInner.children[0].remove;
         pageInner.appendChild(sortedTiles[i]);
     }
+}
+
+function showEditTileWindow(tile) {
+    editTileWindow.setAttribute("style", "display: block");
+    currentTile = tile;
+}
+
+function renameTile() {
+    let input = prompt("Enter a new name");
+    if (input != null) {
+
+        let id = -1;
+
+        for (i = 0; i < sheets.length; i++) {
+            if (sheets[i].properties.title == currentTile.children[0].innerHTML) {
+                id = sheets[i].properties.sheetId;
+                break;
+            }
+        }
+
+        gapi.client.sheets.spreadsheets.batchUpdate({
+            spreadsheetId: SPREADSHEET_ID,
+            requests: {
+                updateSheetProperties: {
+                    properties: {
+                        sheetId: id,
+                        title: input
+                    },
+                    fields: "Title"
+                }
+            }
+        })
+        .then((response) => {
+            console.log(response);
+            window.location.reload();
+        });
+
+    }
+}
+
+function deleteTile() {
+    let input = confirm("Are you sure you want to delete this?");
+
+    if (input == true) {
+
+        let id = -1;
+
+        for (i = 0; i < sheets.length; i++) {
+            if (sheets[i].properties.title == currentTile.children[0].innerHTML) {
+                id = sheets[i].properties.sheetId;
+                break;
+            }
+        }
+
+        gapi.client.sheets.spreadsheets.batchUpdate({
+            spreadsheetId: SPREADSHEET_ID,
+            requests: {
+                deleteSheet: {
+                    sheetId: id,
+                }
+            }
+        })
+        .then((response) => {
+            console.log(response);
+            window.location.reload();
+        });
+
+    }
+}
+
+function cancel() {
+    editTileWindow.setAttribute("style", "display: none");
 }
