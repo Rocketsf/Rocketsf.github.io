@@ -193,3 +193,25 @@ label {
 .daterow, .creditrow, .debitrow, .balancerow {
     white-space: nowrap;
 }
+
+#tablebalance {
+    background-color: rgb(49, 72, 73);
+    height:auto;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 16px;
+    padding: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font: bold 20px 'Open Sans';
+    color: white;
+}
+
+.bar {
+    padding-right: 10px;
+    margin: auto;
+    margin-left: 0px;
+    width: fit-content;
+}

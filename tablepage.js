@@ -86,9 +86,11 @@ function putTableData() {
 }
 
 function openEdit(row, id) {
-    editWindow.setAttribute("style", "display: block");
-    currentRow = row;
     rowId = parseInt(id);
+    if (rowId != 0) {
+        editWindow.setAttribute("style", "display: block");
+        currentRow = row;
+    }
 }
 
 function applyEdit() {
@@ -275,5 +277,7 @@ function addRadioChange(r) {
 }
 
 function updateBalance() {
-    tableBalance.innerHTML = "TOTAL BALANCE: " + table.lastChild.children[0].children[4].innerHTML;
+    if (table.children.length > 1) {
+        tableBalance.innerHTML = "TOTAL BALANCE: " + table.lastChild.children[0].children[4].innerHTML;
+    }
 }
