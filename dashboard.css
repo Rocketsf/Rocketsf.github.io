@@ -2,8 +2,36 @@ body, html {
     background-color: rgb(217, 217, 217);
     margin: auto;
     padding: 0;
-    position: relative;
     height: 100%;
+}
+
+@media only screen and (max-width: 400px){
+    #top_bar {
+        height: 100px;
+        width: 100%;
+    }
+    .edittilebtn {
+        position: absolute;
+    }
+} 
+
+.edittilebtn {
+    float: right;
+    position: relative;
+    bottom: 17px;
+    right: 20px;
+    border: none;
+    border-radius: 50px;
+    background-color: rgba(0, 0, 0, 0);
+    width: 4px;
+    height: 4px;
+    transition-duration: 0.2s;
+}
+
+.edittilebtn:hover {
+    position: relative;
+    transition-duration: 0.2s;
+    transform: rotate(45deg);
 }
 
 #top_bar {
@@ -11,7 +39,6 @@ body, html {
     height: 50px;
     text-align: left;
     text-indent: 1%;
-    left: 50px;
     vertical-align: middle;
     line-height: 50px;
     color: white;
@@ -19,6 +46,17 @@ body, html {
     font-size: 24px;
 }
 
+#search {
+    margin: auto;
+    display: inline-block;
+    border: none;
+    border-radius: 20px;
+    padding-left: 10px;
+    height: 2em;
+    width: 95%;
+    margin-top: 5%;
+    position: relative;
+}
 
 #total_balance {
     background-color: rgb(49, 72, 73);
@@ -33,6 +71,7 @@ body, html {
     white-space: nowrap;
     font: bold 20px 'Open Sans';
     color: white;
+    margin-top: 5%;
 }
 
 .bar {
@@ -124,42 +163,26 @@ pre {
     display: inline-block;
 }
 
-.edittilebtn {
-    float: right;
-    position: relative;
-    bottom: 25px;
-    right: 20px;
-    border: none;
-    border-radius: 50px;
-    background-color: rgba(0, 0, 0, 0);
-    width: 50px;
-    height: 50px;
-    transition-duration: 0.2s;
-}
 
-.edittilebtn:hover {
-    position: relative;
-    background-color: rgb(156, 156, 156);
-    transition-duration: 0.2s;
-    transform: rotate(45deg);
-}
 
 i {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    width: 1em;
+    height: 1em;
 }
 
 #addaccount {
     position: fixed;
-    bottom: 50px;
-    right: 50px;
+    bottom: 1%;
+    right: 1%;
     border: 3px solid white;
     border-radius: 50px;
-    width: 100px;
-    height: 100px;
-    font-size: 64px;
+    width: 2em;
+    height: 2em;
+    font-size: 48px;
     background-color: rgb(40, 75, 99);
     color: white;
     transition-duration: 0.1s;
@@ -176,18 +199,7 @@ i {
     background-color: rgb(29, 48, 61);
 }
 
-#search {
-    margin: auto;
-    display: inline-block;
-    position: absolute;
-    left: 200px;
-    top: 11px;
-    height: 25px;
-    width: 300px;
-    border: none;
-    border-radius: 20px;
-    padding-left: 10px;
-}
+
 
 #edittilewindow {
     position: fixed;
