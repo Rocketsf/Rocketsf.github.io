@@ -225,7 +225,7 @@ label {
     width: fit-content;
 }
 
-@media only screen and (max-width: 10cm) {
+@media only screen and (max-width: 15cm) {
     #top_bar {
         height: 50px;
         width: 100%;

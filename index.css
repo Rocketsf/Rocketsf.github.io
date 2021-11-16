@@ -25,9 +25,7 @@ body, html {
     border-radius: 5%;
 }
 
-
-
-@media only screen and (max-width: 10cm){
+@media only screen and (max-width: 15cm){
     #loginbox {
         width: 80%;
     }
