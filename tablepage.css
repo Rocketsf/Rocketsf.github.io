@@ -225,7 +225,7 @@ label {
     width: fit-content;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 10cm) {
     #top_bar {
         height: 50px;
         width: 100%;
@@ -239,7 +239,7 @@ label {
         width: 100%;
     }
     #editwindow, #editrow, #addrowwindow {
-        width: 80%;
+        width: 20em;
         height: fit-content;
         padding-bottom: 5%;
     }

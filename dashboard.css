@@ -20,8 +20,6 @@ body, html {
     background-color: rgba(60, 110, 113, 0.975);
 }
 
-
-
 .edittilebtn:hover {
     position: relative;
     transition-duration: 0.2s;
@@ -256,7 +254,7 @@ h1 {
     transition-duration: 0.2s;
 }
 
-@media only screen and (max-width: 400px){
+@media only screen and (max-width: 10cm){
     #top_bar {
         height: 50px;
         width: 100%;
