@@ -5,28 +5,22 @@ body, html {
     height: 100%;
 }
 
-@media only screen and (max-width: 400px){
-    #top_bar {
-        height: 100px;
-        width: 100%;
-    }
-    .edittilebtn {
-        position: absolute;
-    }
-} 
 
-.edittilebtn {
-    float: right;
-    position: relative;
-    bottom: 17px;
-    right: 20px;
-    border: none;
-    border-radius: 50px;
-    background-color: rgba(0, 0, 0, 0);
-    width: 4px;
-    height: 4px;
-    transition-duration: 0.2s;
+#edittilewindow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 300px;
+    background-color: white;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: rgb(49, 72, 73);
+    background-color: rgba(60, 110, 113, 0.975);
 }
+
+
 
 .edittilebtn:hover {
     position: relative;
@@ -163,8 +157,6 @@ pre {
     display: inline-block;
 }
 
-
-
 i {
     position: absolute;
     left: 50%;
@@ -180,8 +172,8 @@ i {
     right: 1%;
     border: 3px solid white;
     border-radius: 50px;
-    width: 2em;
-    height: 2em;
+    width: 1.5em;
+    height: 1.5em;
     font-size: 48px;
     background-color: rgb(40, 75, 99);
     color: white;
@@ -198,23 +190,6 @@ i {
     transition-duration: 0.1s;
     background-color: rgb(29, 48, 61);
 }
-
-
-
-#edittilewindow {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 500px;
-    height: 300px;
-    background-color: white;
-    border-radius: 10px;
-    border-style: solid;
-    border-color: rgb(49, 72, 73);
-    background-color: rgba(60, 110, 113, 0.975);
-}
-
 
 h1 {
     text-align: center;
@@ -267,3 +242,30 @@ h1 {
     background-color: rgb(255, 255, 255);
     transition-duration: 0.2s;
 }
+
+.edittilebtn {
+    float: right;
+    position: relative;
+    bottom: 17px;
+    right: 20px;
+    border: none;
+    border-radius: 50px;
+    background-color: rgba(0, 0, 0, 0);
+    width: 4px;
+    height: 4px;
+    transition-duration: 0.2s;
+}
+
+@media only screen and (max-width: 400px){
+    #top_bar {
+        height: 50px;
+        width: 100%;
+    }
+    .edittilebtn {
+        overflow:visible;
+        white-space: nowrap;
+    }
+    #edittilewindow {
+        width: 80%;
+    }
+} 

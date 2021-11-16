@@ -2,7 +2,6 @@ body, html {
     background-color: rgb(217, 217, 217);
     margin: auto;
     padding: 0;
-    position: relative;
     height: 100%;
 }
 
@@ -15,7 +14,6 @@ body, html {
     height: 50px;
     text-align: left;
     text-indent: 4em;
-    left: 50px;
     vertical-align: middle;
     line-height: 50px;
     color: white;
@@ -72,7 +70,7 @@ body, html {
 #pageinner {
     top: 0px;
     margin: auto;
-    padding: 10px;
+    padding: 5px;
 }
 
 p {
@@ -82,7 +80,8 @@ p {
 table, th, td {
     border: 2px solid black;
     border-collapse: collapse;
-    padding: 10px;
+    padding: 5px;
+    text-align: center;
 }
 
 tr {
@@ -176,7 +175,7 @@ h1 {
 }
 
 .input, label {
-    margin-left: 30px;
+    margin-left: 20px;
     display: inline-block;
 }
 
@@ -192,6 +191,7 @@ label {
 
 .daterow, .creditrow, .debitrow, .balancerow {
     white-space: nowrap;
+    vertical-align: top;
 }
 
 #tablebalance {
@@ -209,9 +209,45 @@ label {
     color: white;
 }
 
+#tabledata {
+    word-break: break-all;
+}
+
+.particularrow {
+    text-align: left;
+    vertical-align: top;
+}
+
 .bar {
     padding-right: 10px;
     margin: auto;
     margin-left: 0px;
     width: fit-content;
+}
+
+@media only screen and (max-width: 400px) {
+    #top_bar {
+        height: 50px;
+        width: 100%;
+    }
+    .daterow, .creditrow, .debitrow, .balancerow {
+        white-space: normal;
+    }
+    #tabledata {
+        word-break: break-all;
+        table-layout: fixed;
+        width: 100%;
+    }
+    #editwindow, #editrow, #addrowwindow {
+        width: 80%;
+        height: fit-content;
+        padding-bottom: 5%;
+    }
+    #apply, #newapply, #canceleditrow, #newcanceleditrow {
+        width: 90%;
+        margin-left: 15px
+    }
+    #dateinput, #particularinput, #creditinput, #debitinput, #newdateinput, #newparticularinput, #addcreditinput, #adddebitinput {
+        height: 20px;
+    }
 }

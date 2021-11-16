@@ -40,6 +40,7 @@ window.onload = function() {
         window.location = "/dashboard.html";
     }
     putTableData();
+    setRowColors();
     gapi.load('client:auth2', init);
 }
 
@@ -55,8 +56,6 @@ function init() {
         appendPre(JSON.stringify(error, null, 2));
     });
 }
-
-
 
 function putTableData() {
     console.log(sheetValues);
@@ -109,7 +108,7 @@ function applyEdit() {
                 [currentRow.children[4].innerHTML]], 
                 "A"+(rowId+1)+":E"+(rowId+1)
     );
-
+    
     closeEditRow();
     closeEdit();
     updateBalance();
@@ -279,5 +278,19 @@ function addRadioChange(r) {
 function updateBalance() {
     if (table.children.length > 1) {
         tableBalance.innerHTML = "TOTAL BALANCE: " + table.lastChild.children[0].children[4].innerHTML;
+    }
+}
+
+function setRowColors() {
+    for (i = 0; i < table.children.length; i++) {
+        if (i == 0) {
+            table.children[i].setAttribute("style", "background-color: rgb(150,150,150)");
+        }
+        else {
+            if (parseFloat(table.children[i].children[0].children[2].innerHTML) == 0) {
+                table.children[i].setAttribute("style", "background-color: rgb(190,125,125)");
+            }
+            else table.children[i].setAttribute("style", "background-color: rgb(120,200,145)");
+        }
     }
 }
