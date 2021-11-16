@@ -166,8 +166,8 @@ i {
 
 #addaccount {
     position: fixed;
-    bottom: 1%;
-    right: 1%;
+    bottom: 2%;
+    right: 2%;
     border: 3px solid white;
     border-radius: 50px;
     width: 1.5em;
