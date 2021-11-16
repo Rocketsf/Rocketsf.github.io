@@ -266,4 +266,13 @@ h1 {
     #edittilewindow {
         width: 80%;
     }
-} 
+}
+
+@media only screen and (max-width: 370px) {
+    #tile {
+        height: 20%;
+    }
+    #credit, #debit, #balance {
+        padding-right: 50px;
+    }
+}
