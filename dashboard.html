@@ -19,13 +19,12 @@
             </div>
             <div class="bar">
                 <p id="total_balance">TOTAL BALANCE: --</p>
-                <input id="search" type="text" placeholder="Search">
+                <span><input id="search" type="text" placeholder="Search"></span>
             </div>
             
             <div id="pageinner">
-                
-                <p style="font: bold 30px 'Open Sans'; text-align:center; margin: auto; padding-top: 50px;">LOADING DATA</p>
-                <div id="tile" style="display: none;">
+                <p class="pgld"></p>
+                <div id="tile" class="tileanim" style="display: none;">
                     <p id="name" class="info">NAME</p>
                     <p id="credit" class="info">Credit: 0</p>
                     <p id="debit" class="info">Debit: 0</p>
@@ -36,7 +35,7 @@
                 </div>
             </div>
             <button id="addaccount">+</button>
-            <div id="edittilewindow" style="display: none;">
+            <div id="edittilewindow" class="editwindowanim" style="display: none;">
                 <h1>Edit Tile</h1>
                 <button id="rename" class="editbtn" onclick="renameTile()">Rename</button>
                 <button id="delete" class="editbtn" onclick="deleteTile()">Delete</button>
@@ -49,4 +48,5 @@
     <script type="text/javascript" src="sheetsauth.js"></script>
     <script type="text/javascript" src="sheetdeauth.js"></script>
     <script type="text/javascript" src="dashboard.js"></script>
+    <script type="text/javascript" src="anime.min.js"></script>
 </html>

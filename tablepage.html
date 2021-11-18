@@ -21,18 +21,18 @@
                     <br><p id="tablebalance">TOTAL BALANCE: --</p><br>
                 </div>
                 
-                <div id ="editwindow" style="display: none;">
+                <div id="editwindow" class="editwindowanim" style="display: none;">
                     <h1>Row Data</h1>
                     <button id="edit" class="editbtn" onclick="editRow()">Edit</button>
                     <button id="delete" class="editbtn" onclick="deleteRow()">Delete</button>
                     <button id="cancel" class="editbtn" onclick="closeEdit()">Cancel</button>
                 </div>
-                <div id="editrow" style="display: none;">
+                <div id="editrow" class="editrowanim" style="display: none;">
                     <h1>Edit Row</h1>
                     <form>
                         <label>Date:</label><br>
                         <input type="date" id="dateinput" class="input" value=""><br><br>
-                        <label>Particular:</label><br> 
+                        <label>Notes:</label><br> 
                         <input type="text" id="particularinput" class="input" value=""><br><br>
 
                         <label for="rcredit">Credit</label>
@@ -43,19 +43,19 @@
                         <br>
                         <br>
                         <label id="creditlabel">Credit:</label>
-                        <input type="number" step="0.01" min=0 id="creditinput" class="input" value="">
+                        <input type="number" step="0.01" min=0 id="creditinput" class="input" value="0">
                         <label id="debitlabel" style="display: none;">Debit:</label>
-                        <input type="number" step="0.01" min=0 id="debitinput" class="input" value="" style="display: none;">
+                        <input type="number" step="0.01" min=0 id="debitinput" class="input" value="0" style="display: none;">
                     </form>
                     <button id="apply" class="editbtn" onclick="applyEdit()">Apply</button>
                     <button id="canceleditrow" onclick="closeEditRow()" class="editbtn">Cancel</button>
                 </div>
-                <div id="addrowwindow" style="display: none;">
+                <div id="addrowwindow" class="addrowanim" style="display: none;">
                     <h1>Create new row</h1>
                     <form>
                         <label>Date:</label><br>
                         <input type="date" id="newdateinput" class="input"><br><br>
-                        <label>Particular:</label><br> 
+                        <label>Notes:</label><br> 
                         <input type="text" id="newparticularinput" class="input"><br><br>
 
                         <label for="rcredit">Credit</label>
@@ -66,9 +66,9 @@
                         <br>
                         <br>
                         <label id="addcreditlabel" style="display: block;">Credit:</label>
-                        <input type="number" step="0.01" min=0 id="addcreditinput" class="input" value="" style="display: block;">
+                        <input type="number" step="0.01" min=0 id="addcreditinput" class="input" value="0" style="display: block;">
                         <label id="adddebitlabel" style="display: none;">Debit:</label>
-                        <input type="number" step="0.01" min=0 id="adddebitinput" class="input" value="" style="display: none;">
+                        <input type="number" step="0.01" min=0 id="adddebitinput" class="input" value="0" style="display: none;">
                     </form>
                     <button id="newapply" class="editbtn" onclick="applyNewRow()">Apply</button>
                     <button id="newcanceleditrow" onclick="closeNewRow()" class="editbtn">Cancel</button>
@@ -92,4 +92,5 @@
     <script type="text/javascript" src="sheetsauth.js"></script>
     <script type="text/javascript" src="dashboard.js"></script>
     <script type="text/javascript" src="tablepage.js"></script>
+    <script type="text/javascript" src="anime.min.js"></script>
 </html>

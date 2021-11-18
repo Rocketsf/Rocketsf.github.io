@@ -49,7 +49,7 @@ function updateSheet(sheetName, data, cellRange) {
     gapi.client.sheets.spreadsheets.values.update({
         spreadsheetId: SPREADSHEET_ID,
         range: sheetName+"!"+cellRange,
-        valueInputOption: "RAW",
+        valueInputOption: "USER_ENTERED",
         resource: {
             majorDimension: "COLUMNS",
             values: data
@@ -68,13 +68,23 @@ function getSheets() {
     }).then(function(response) {
         sheets = JSON.parse(JSON.stringify(response.result.sheets));
         console.log("got sheets");
-    });    
+    });
+    anime({
+        targets: ".pgld",
+        duration: 2000,
+        loop: true,
+        easing: "easeInOutQuart",
+        translateX: [-300, 0, 300, 0]
+    })
 }
 
 function openSheet() {
+    
     console.log(sheets); 
     console.log("SHEET COUNT = " + sheets.length);
     pageInner.removeChild(pageInner.childNodes[1]);
+
+    
 
     for (i = 0; i < sheets.length; i++) {
         var clone = tile.cloneNode(true);
@@ -93,8 +103,9 @@ function openSheet() {
                 else showEditTileWindow(e.currentTarget);
             })
         } 
+        
         setTileValues();
-    }, 300);
+    }, 500);
     
 }
 
@@ -130,6 +141,17 @@ function setTileValues() {
     }
     totalBalance.innerHTML = "TOTAL BALANCE: " + total;
     sortTiles();
+
+    let anim = anime({
+        targets: document.getElementsByClassName("tileanim"),
+        duration: 50,
+        opacity: 1,
+        translateX: [-50, 0],
+        autoplay: false,
+        easing: 'easeOutSine',
+        delay: anime.stagger(100, {start: 100})
+    });
+    anim.play();
 }
 
 function showTable(btn) {
@@ -168,6 +190,12 @@ function sortTiles() {
 function showEditTileWindow(tile) {
     editTileWindow.setAttribute("style", "display: block");
     currentTile = tile;
+    anime({
+        targets: ".editwindowanim",
+        scale: [0, 1],
+        duration: 100,
+        easing: "linear"
+    })
 }
 
 function renameTile() {
@@ -234,5 +262,10 @@ function deleteTile() {
 }
 
 function cancel() {
-    editTileWindow.setAttribute("style", "display: none");
+    anime({
+        targets: ".editwindowanim",
+        scale: [1, 0],
+        duration: 100,
+        easing: "linear"
+    })
 }

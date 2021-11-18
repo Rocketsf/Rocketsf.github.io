@@ -44,8 +44,8 @@ function updateSigninStatus(isSignedIn) {
             for (i = 0; i < sheets.length; i++) {
                 loadData(sheets[i].properties.title);
             }
-         }, 1000);
-         
+        }, 1000);
+        
         setTimeout(function() { openSheet() }, 1500);
         
     } else {

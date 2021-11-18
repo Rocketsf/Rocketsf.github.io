@@ -52,9 +52,56 @@ function init() {
         scope: SCOPES
     }).then(function () {
         getSheets();
+        setTimeout(sortRows, 500);
     }, function (error) {
         appendPre(JSON.stringify(error, null, 2));
     });
+}
+
+function sortRows() {
+    let sortedRows = Array.from(table.children);
+    sortedRows.sort(function(a, b) {
+        return a.children[0].children[0].textContent > b.children[0].children[0].textContent ? -1 : 1
+    });
+
+    for (i = 1; i < sortedRows.length; i++) {
+        table.children[0].remove;
+        table.appendChild(sortedRows[i]);
+    }
+   
+    let id = -1;
+
+    for (i = 0; i < sheets.length; i++) {
+        if (sheets[i].properties.title == tileName) {
+            id = sheets[i].properties.sheetId;
+            break;
+        }
+    }
+
+    setTimeout(function() {
+        gapi.client.sheets.spreadsheets.batchUpdate({
+            spreadsheetId: SPREADSHEET_ID,
+            requests: {
+                sortRange: {
+                    range: {
+                        sheetId: id,
+                        startRowIndex: 1,
+                        endRowIndex: table.children.length,
+                        startColumnIndex: 0,
+                        endColumnIndex: 5
+                    },
+                    sortSpecs: [{
+                        sortOrder: "DESCENDING"
+                    }]
+                }
+            }
+        })
+        .then((response) => {
+            console.log("sorted rows");
+            console.log(response); 
+        })
+    }, 500);
+    
 }
 
 function putTableData() {
@@ -81,7 +128,10 @@ function putTableData() {
         }
     }
 
+    table.children[0].children[0].children[1].innerHTML = "Notes";
+    table.children[0].children[0].children[1].setAttribute("style", "text-align: center");
     updateBalance();
+    
 }
 
 function openEdit(row, id) {
@@ -89,10 +139,17 @@ function openEdit(row, id) {
     if (rowId != 0) {
         editWindow.setAttribute("style", "display: block");
         currentRow = row;
+        anime({
+            targets: ".editwindowanim",
+            scale: [0, 1],
+            duration: 100,
+            easing: "linear"
+        })
     }
 }
 
 function applyEdit() {
+
     currentRow.children[0].innerHTML = date.value;
     currentRow.children[1].innerHTML = particular.value;
     currentRow.children[2].innerHTML = credit.value;
@@ -112,6 +169,8 @@ function applyEdit() {
     closeEditRow();
     closeEdit();
     updateBalance();
+    setRowColors();
+    setTimeout(sortRows, 750);
 }
 
 function editRow() {
@@ -123,15 +182,28 @@ function editRow() {
     debit.setAttribute("value", currentRow.children[3].innerHTML);
     
     console.log(currentRow);
+
+    anime({
+        targets: ".editrowanim",
+        scale: [0, 1],
+        duration: 100,
+        easing: "linear"
+    })
 }
 
 function addRow() {
     addRowWindow.setAttribute("style", "display:block");
+    anime({
+        targets: ".addrowanim",
+        scale: [0, 1],
+        duration: 100,
+        easing: "linear"
+    })
 }
 
 function deleteRow() {
     let input = confirm("Are you sure you want to delete this row?");
-    
+
     if (input == true) {
 
         let sheetId = -1;
@@ -173,11 +245,12 @@ function deleteRow() {
             for (i = 0; i < table.children.length; i++) {
                 table.children[i].children[0].id = i;
             }
+
+            updateBalance();
+            sortRows();
         }, function(reason) {
             console.error(reason.result.error.message);
         });
-
-        updateBalance();
     }
 }
 
@@ -212,6 +285,8 @@ function applyNewRow() {
 
         closeNewRow();
         updateBalance();
+        sortRows();
+        setRowColors();
     }
     else if (newDate.value == "" || (newDate.value != "" && newCredit.value == "" ) || (newDate.value != "" && newDebit == "")) {
         alert("Please input a new date and credit or debit value.");
@@ -219,15 +294,30 @@ function applyNewRow() {
 }
 
 function closeEdit() {
-    editWindow.setAttribute("style", "display: none");
+    anime({
+        targets: ".editwindowanim",
+        scale: [1, 0],
+        duration: 100,
+        easing: "linear"
+    })
 }
 
 function closeEditRow() {
-    editRowWindow.setAttribute("style", "display: none");
+    anime({
+        targets: ".editrowanim",
+        scale: [1, 0],
+        duration: 100,
+        easing: "linear"
+    })
 }
 
 function closeNewRow() {
-    addRowWindow.setAttribute("style", "display:none");
+    anime({
+        targets: ".addrowanim",
+        scale: [1, 0],
+        duration: 100,
+        easing: "linear"
+    })
 }
 
 function editRadioChange(r) {
