@@ -84,8 +84,6 @@ function openSheet() {
     console.log("SHEET COUNT = " + sheets.length);
     pageInner.removeChild(pageInner.childNodes[1]);
 
-    
-
     for (i = 0; i < sheets.length; i++) {
         var clone = tile.cloneNode(true);
         pageInner.appendChild(clone);
@@ -142,16 +140,15 @@ function setTileValues() {
     totalBalance.innerHTML = "TOTAL BALANCE: " + total;
     sortTiles();
 
-    let anim = anime({
+    anime({
         targets: document.getElementsByClassName("tileanim"),
         duration: 50,
         opacity: 1,
         translateX: [-50, 0],
-        autoplay: false,
         easing: 'easeOutSine',
         delay: anime.stagger(100, {start: 100})
     });
-    anim.play();
+    
 }
 
 function showTable(btn) {
@@ -165,10 +162,19 @@ function showTable(btn) {
 }
 
 function search(e) {
+    console.log(e.target.value);
     for (i = 0; i < pageInner.children.length; i++) {
         if (pageInner.children[i].children[0].innerHTML.toLowerCase().includes(e.target.value.toLowerCase())){
-            if (!(pageInner.children[i].children[0].innerHTML == "NAME" && pageInner.children[i].style.display == "none")) {
+            if (pageInner.children[i].children[0].innerHTML != "SHEET_NAME") {
                 pageInner.children[i].setAttribute("style", "display: block");
+                anime({
+                    targets: pageInner.children[i],
+                    duration: 100,
+                    opacity: 1,
+                    translateX: [0],
+                    easing: 'easeInSine',
+                    delay: 50
+                });
             }
         }
         else pageInner.children[i].setAttribute("style", "display: none");
