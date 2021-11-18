@@ -92,6 +92,7 @@ span {
 
 #dashboard {
     overflow: hidden;
+    padding-left: 10px;
 }
 
 #page {
@@ -289,6 +290,10 @@ h1 {
     }
     #edittilewindow {
         width: 80%;
+        left:0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
@@ -298,5 +303,12 @@ h1 {
     }
     #credit, #debit, #balance {
         padding-right: 50px;
+    }
+    #edittilewindow {
+        width: 80%;
+        left:0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
