@@ -74,7 +74,7 @@ function getSheets() {
         duration: 2000,
         loop: true,
         easing: "easeInOutQuart",
-        translateX: ['-200%', 0, '200%', 0]
+        translateX: ['-80%', 0, '80%', 0]
     })
 }
 
