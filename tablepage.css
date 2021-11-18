@@ -109,10 +109,6 @@ tr:hover {
     background-color: rgba(26, 49, 65, 0.95);
 }
 
-.editrowanim {
-    scale: 0;
-}
-
 #addrowwindow {
     height: 400px; 
 }
