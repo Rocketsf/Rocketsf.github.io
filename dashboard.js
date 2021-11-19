@@ -25,23 +25,36 @@ function loadData(sheetName) {
 }
 
 function createSheet(titleName) {
-    gapi.client.sheets.spreadsheets.batchUpdate({
-        spreadsheetId: SPREADSHEET_ID,
-        requests: {
-            addSheet: {
-                properties: {
-                    title: titleName
+    
+    let sheetExists = false;
+
+    for (i = 0; i < sheets.length; i++) {
+        if (sheets[i].properties.title.toLowerCase() == titleName) {
+            alert("Account name '" + sheets[i].properties.title + "' already exists!");
+            sheetExists = true;
+            break;
+        } 
+    }
+
+    if (!sheetExists) {
+        gapi.client.sheets.spreadsheets.batchUpdate({
+            spreadsheetId: SPREADSHEET_ID,
+            requests: {
+                addSheet: {
+                    properties: {
+                        title: titleName
+                    }
                 }
             }
-        }
-    })
-    .then((response) => {
-        console.log(response); 
-    });
-    setTimeout(function() { 
-        updateSheet(titleName, [["Date"],["Particular"],["Credit"],["Debit"],["Balance"],[sheets.length + 1]], "A1:F1");
-        window.location.reload(); 
-    }, 1000);
+        })
+        .then((response) => {
+            console.log(response); 
+        });
+        setTimeout(function() { 
+            updateSheet(titleName, [["Date"],["Particular"],["Credit"],["Debit"],["Balance"],[sheets.length + 1]], "A1:F1");
+            window.location.reload(); 
+        }, 1000);
+    }
     
 }
 

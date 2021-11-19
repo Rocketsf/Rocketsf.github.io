@@ -52,7 +52,7 @@ function init() {
         scope: SCOPES
     }).then(function () {
         getSheets();
-        setTimeout(sortRows, 500);
+        setTimeout(sortRows, 1000);
     }, function (error) {
         appendPre(JSON.stringify(error, null, 2));
     });
@@ -106,9 +106,15 @@ function sortRows() {
 
 function putTableData() {
     console.log(sheetValues);
-    
+    console.log(tileName);
     for (i = 0; i < sheetValues.length; i++) {
-        if (sheetValues[i].result.range.includes(tileName)) {
+        let exIndex = sheetValues[i].result.range.indexOf("!");
+        let sheetName = sheetValues[i].result.range.substring(0, exIndex);
+
+        if (sheetName.includes("'")) {
+            sheetName = sheetName.substring(1, sheetName.length - 1);
+        }
+        if (sheetName == tileName) {
             currentValues = sheetValues[i];
             break;
         }
@@ -149,9 +155,12 @@ function openEdit(row, id) {
 }
 
 function applyEdit() {
-
     currentRow.children[0].innerHTML = date.value;
     currentRow.children[1].innerHTML = particular.value;
+
+    if (credit.value == "") credit.value = 0;
+    if (debit.value == "") debit.value = 0;
+
     currentRow.children[2].innerHTML = credit.value;
     currentRow.children[3].innerHTML = debit.value;
     currentRow.children[4].innerHTML = (parseFloat(credit.value) - parseFloat(debit.value) + parseFloat(document.getElementById(rowId - 1).children[4].innerHTML));
@@ -199,6 +208,8 @@ function addRow() {
         duration: 100,
         easing: "linear"
     })
+    newCredit.value = "";
+    newDebit.value = "";
 }
 
 function deleteRow() {
@@ -245,12 +256,18 @@ function deleteRow() {
             for (i = 0; i < table.children.length; i++) {
                 table.children[i].children[0].id = i;
             }
-
+            getSheets();
             updateBalance();
             sortRows();
         }, function(reason) {
             console.error(reason.result.error.message);
         });
+
+        // for (i = 0; i < sheets.length; i++) {
+        //     updateSheet(sheets[i].properties.sheetId, [[i + 1]], "F1:F1");
+        //     console.log(response);
+        // }
+
     }
 }
 
@@ -332,14 +349,12 @@ function editRadioChange(r) {
         cinput.setAttribute("style", "display: inline-block");
         dlabel.setAttribute("style", "display: none");
         dinput.setAttribute("style", "display: none");
-        debit.value = 0;
     }
     else if (r.value == "chosedebit") {
         clabel.setAttribute("style", "display: none");
         dlabel.setAttribute("style", "display: inline-block");
         cinput.setAttribute("style", "display: none");
         dinput.setAttribute("style", "display: inline-block");
-        credit.value = 0;
     }
 }
 
@@ -354,14 +369,12 @@ function addRadioChange(r) {
         cinput.setAttribute("style", "display: inline-block");
         dlabel.setAttribute("style", "display: none");
         dinput.setAttribute("style", "display: none");
-        newDebit.value = 0;
     }
     else if (r.value == "chosedebit") {
         clabel.setAttribute("style", "display: none");
         dlabel.setAttribute("style", "display: inline-block");
         cinput.setAttribute("style", "display: none");
         dinput.setAttribute("style", "display: inline-block");
-        newCredit.value = 0;
     }
 }
 

@@ -17,6 +17,7 @@
                 <button id="addrowbtn" class="topbtn" onclick="addRow()">+</button>
             </div>
             <div id="pageinner">
+
                 <div class="bar">
                     <br><p id="tablebalance">TOTAL BALANCE: --</p><br>
                 </div>
@@ -27,6 +28,7 @@
                     <button id="delete" class="editbtn" onclick="deleteRow()">Delete</button>
                     <button id="cancel" class="editbtn" onclick="closeEdit()">Cancel</button>
                 </div>
+
                 <div id="editrow" class="editrowanim" style="display: none;">
                     <h1>Edit Row</h1>
                     <form>
@@ -43,13 +45,14 @@
                         <br>
                         <br>
                         <label id="creditlabel">Credit:</label>
-                        <input type="number" step="0.01" min=0 id="creditinput" class="input" value="0">
+                        <input type="number" step="0.01" min=0 id="creditinput" class="input" value="">
                         <label id="debitlabel" style="display: none;">Debit:</label>
-                        <input type="number" step="0.01" min=0 id="debitinput" class="input" value="0" style="display: none;">
+                        <input type="number" step="0.01" min=0 id="debitinput" class="input" value="" style="display: none;">
                     </form>
                     <button id="apply" class="editbtn" onclick="applyEdit()">Apply</button>
                     <button id="canceleditrow" onclick="closeEditRow()" class="editbtn">Cancel</button>
                 </div>
+
                 <div id="addrowwindow" class="addrowanim" style="display: none;">
                     <h1>Create new row</h1>
                     <form>
@@ -65,13 +68,14 @@
                         <input type="radio" id="newradiodebit" name="creditdebit" value="chosedebit" onchange="addRadioChange(this)"><br><br>
                         
                         <label id="addcreditlabel" style="display: block;">Credit:</label>
-                        <input type="number" step="0.01" min=0 id="addcreditinput" class="input" value="0" style="display: block;">
+                        <input type="number" step="0.01" min=0 id="addcreditinput" class="input" value="" style="display: block;">
                         <label id="adddebitlabel" style="display: none;">Debit:</label>
-                        <input type="number" step="0.01" min=0 id="adddebitinput" class="input" value="0" style="display: none;">
+                        <input type="number" step="0.01" min=0 id="adddebitinput" class="input" value="" style="display: none;">
                     </form>
                     <button id="newapply" class="editbtn" onclick="applyNewRow()">Apply</button>
                     <button id="newcanceleditrow" onclick="closeNewRow()" class="editbtn">Cancel</button>
                 </div>
+                
                 <table id="tabledata">
                     <tr id="0" onclick="openEdit(this, this.id)">
                         <td class="daterow"></td>
