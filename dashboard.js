@@ -29,7 +29,7 @@ function createSheet(titleName) {
     let sheetExists = false;
 
     for (i = 0; i < sheets.length; i++) {
-        if (sheets[i].properties.title.toLowerCase() == titleName) {
+        if (sheets[i].properties.title.toLowerCase() == titleName.toLowerCase()) {
             alert("Account name '" + sheets[i].properties.title + "' already exists!");
             sheetExists = true;
             break;
