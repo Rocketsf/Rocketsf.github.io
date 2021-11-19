@@ -26,6 +26,7 @@ let debitRadio = document.getElementById("radiodebit");
 let currentRow, rowId = 0;
 
 window.onload = function() {
+
     for (i = 0; i < localStorage.length - 1; i++) {
         sheetValues.push(JSON.parse(localStorage.getItem("account"+i)));
     }
@@ -46,17 +47,18 @@ window.onload = function() {
 
 }
 
-function updateAccounts() {
-    while (accounts.length > 0) accounts.pop();
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: SPREADSHEET_ID,
-        range: tileName+"!A:F"
-    }).then(function (response) {
-        console.log(response);
-        accounts.push(response);
-        localStorage.setItem("account0", JSON.stringify(accounts[0]));
-    });
-}
+// function updateAccounts() {
+//     while (accounts.length > 0) accounts.pop();
+//     gapi.client.sheets.spreadsheets.values.get({
+//         spreadsheetId: SPREADSHEET_ID,
+//         range: tileName+"!A:F"
+//     }).then(function (response) {
+//         console.log(response);
+//         console.log("UPDATED ACCOUNT");
+//         accounts.push(response);
+//         localStorage.setItem("account0", JSON.stringify(accounts[0]));
+//     });
+// }
 
 function init() {
     gapi.client.init({
@@ -184,32 +186,35 @@ function applyEdit() {
     currentRow.children[0].innerHTML = date.value;
     currentRow.children[1].innerHTML = particular.value;
 
-    if (credit.value == "") credit.value = 0;
-    if (debit.value == "") debit.value = 0;
+    if (credit.value == "" || debitRadio.checked) credit.value = 0;
+    if (debit.value == "" || creditRadio.checked) debit.value = 0;
 
     currentRow.children[2].innerHTML = credit.value;
     currentRow.children[3].innerHTML = debit.value;
+
+    console.log("credit: "+credit.value+", debit: "+debit.value);
     if (document.getElementById(rowId - 1).children[4].innerHTML != "Balance") {
         currentRow.children[4].innerHTML = (parseFloat(credit.value) - parseFloat(debit.value) + parseFloat(document.getElementById(rowId - 1).children[4].innerHTML));
     }
     else currentRow.children[4].innerHTML = (parseFloat(credit.value) - parseFloat(debit.value));
 
     updateSheet(
-                tileName, 
-                [[currentRow.children[0].innerHTML],
-                [currentRow.children[1].innerHTML],
-                [currentRow.children[2].innerHTML],
-                [currentRow.children[3].innerHTML],
-                [currentRow.children[4].innerHTML]], 
-                "A"+(rowId+1)+":E"+(rowId+1)
+        tileName, 
+        [[currentRow.children[0].innerHTML],
+        [currentRow.children[1].innerHTML],
+        [currentRow.children[2].innerHTML],
+        [currentRow.children[3].innerHTML],
+        [currentRow.children[4].innerHTML]], 
+        "A"+(rowId+1)+":E"+(rowId+1)
     );
     
     closeEditRow();
     closeEdit();
+    setTimeout(sortRows, 750);
     updateBalance();
     setRowColors();
-    updateAccounts();
-    setTimeout(sortRows, 750);
+    //updateAccounts();
+    
 }
 
 function editRow() {
@@ -289,7 +294,7 @@ function deleteRow() {
             getSheets();
             sortRows();
             updateBalance();
-            updateAccounts();
+            //updateAccounts();
         }, function(reason) {
             console.error(reason.result.error.message);
         });
@@ -332,10 +337,10 @@ function applyNewRow() {
         );
 
         closeNewRow();
-        updateBalance();
         sortRows();
+        updateBalance();
+        //updateAccounts();
         setRowColors();
-        updateAccounts();
     }
     else if (newDate.value == "" || (newDate.value != "" && newCredit.value == "" ) || (newDate.value != "" && newDebit == "")) {
         alert("Please input a new date and credit or debit value.");
