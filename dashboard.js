@@ -177,7 +177,7 @@ function showTable(btn) {
 function search(e) {
     console.log(e.target.value);
     for (i = 0; i < pageInner.children.length; i++) {
-        if (pageInner.children[i].children[0].innerHTML.toLowerCase().includes(e.target.value.toLowerCase())){
+        if (pageInner.children[i].children[0].innerHTML.toLowerCase().substring(0, e.target.value.length) == e.target.value.toLowerCase()){
             if (pageInner.children[i].children[0].innerHTML != "SHEET_NAME") {
                 pageInner.children[i].setAttribute("style", "display: block");
                 anime({
