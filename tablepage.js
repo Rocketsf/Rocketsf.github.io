@@ -29,6 +29,7 @@ window.onload = function() {
     for (i = 0; i < localStorage.length - 1; i++) {
         sheetValues.push(JSON.parse(localStorage.getItem("account"+i)));
     }
+    console.log(sheetValues);
     sheetValues.sort((a, b) => {
         if (a != null && b != null) {
             return parseInt(a.result.values[0][5] - parseInt(b.result.values[0][5]));
@@ -42,6 +43,19 @@ window.onload = function() {
     putTableData();
     setRowColors();
     gapi.load('client:auth2', init);
+
+}
+
+function updateAccounts() {
+    while (accounts.length > 0) accounts.pop();
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: SPREADSHEET_ID,
+        range: tileName+"!A:F"
+    }).then(function (response) {
+        console.log(response);
+        accounts.push(response);
+        localStorage.setItem("account0", JSON.stringify(accounts[0]));
+    });
 }
 
 function init() {
@@ -52,7 +66,7 @@ function init() {
         scope: SCOPES
     }).then(function () {
         getSheets();
-        setTimeout(sortRows, 1000);
+        sortRows();
     }, function (error) {
         appendPre(JSON.stringify(error, null, 2));
     });
@@ -60,48 +74,60 @@ function init() {
 
 function sortRows() {
     let sortedRows = Array.from(table.children);
+    sortedRows.reverse()
+    sortedRows.pop();
+    sortedRows.reverse();
     sortedRows.sort(function(a, b) {
-        return a.children[0].children[0].textContent > b.children[0].children[0].textContent ? -1 : 1
+        return a.children[0].children[0].textContent < b.children[0].children[0].textContent ? -1 : 1
     });
 
     for (i = 1; i < sortedRows.length; i++) {
         table.children[0].remove;
         table.appendChild(sortedRows[i]);
     }
-   
-    let id = -1;
 
-    for (i = 0; i < sheets.length; i++) {
-        if (sheets[i].properties.title == tileName) {
-            id = sheets[i].properties.sheetId;
-            break;
-        }
-    }
-
-    setTimeout(function() {
-        gapi.client.sheets.spreadsheets.batchUpdate({
-            spreadsheetId: SPREADSHEET_ID,
-            requests: {
-                sortRange: {
-                    range: {
-                        sheetId: id,
-                        startRowIndex: 1,
-                        endRowIndex: table.children.length,
-                        startColumnIndex: 0,
-                        endColumnIndex: 5
-                    },
-                    sortSpecs: [{
-                        sortOrder: "DESCENDING"
-                    }]
-                }
-            }
-        })
-        .then((response) => {
-            console.log("sorted rows");
-            console.log(response); 
-        })
-    }, 500);
+    // setTimeout(function() {
+    //     gapi.client.sheets.spreadsheets.batchUpdate({
+    //         spreadsheetId: SPREADSHEET_ID,
+    //         requests: {
+    //             sortRange: {
+    //                 range: {
+    //                     sheetId: id,
+    //                     startRowIndex: 1,
+    //                     endRowIndex: table.children.length,
+    //                     startColumnIndex: 0,
+    //                     endColumnIndex: 5
+    //                 },
+    //                 sortSpecs: [{
+    //                     sortOrder: "ASCENDING"
+    //                 }]
+    //             }
+    //         }
+    //     })
+    //     .then((response) => {
+    //         console.log("sorted rows");
+    //         console.log(response); 
+    //     })
+    // }, 500);
     
+    updateBalance();
+
+    // setTimeout(function() {
+        for (i = 1; i < table.children.length; i++) {
+            updateSheet(
+                tileName, 
+                [   
+                    [table.children[i].children[0].children[0].innerHTML],
+                    [table.children[i].children[0].children[1].innerHTML],
+                    [table.children[i].children[0].children[2].innerHTML],
+                    [table.children[i].children[0].children[3].innerHTML],
+                    [table.children[i].children[0].children[4].innerHTML],
+                ],
+                "A"+(i+1)+":E"+(i+1)
+            );
+        }
+    //}, 300);
+
 }
 
 function putTableData() {
@@ -163,7 +189,10 @@ function applyEdit() {
 
     currentRow.children[2].innerHTML = credit.value;
     currentRow.children[3].innerHTML = debit.value;
-    currentRow.children[4].innerHTML = (parseFloat(credit.value) - parseFloat(debit.value) + parseFloat(document.getElementById(rowId - 1).children[4].innerHTML));
+    if (document.getElementById(rowId - 1).children[4].innerHTML != "Balance") {
+        currentRow.children[4].innerHTML = (parseFloat(credit.value) - parseFloat(debit.value) + parseFloat(document.getElementById(rowId - 1).children[4].innerHTML));
+    }
+    else currentRow.children[4].innerHTML = (parseFloat(credit.value) - parseFloat(debit.value));
 
     updateSheet(
                 tileName, 
@@ -179,6 +208,7 @@ function applyEdit() {
     closeEdit();
     updateBalance();
     setRowColors();
+    updateAccounts();
     setTimeout(sortRows, 750);
 }
 
@@ -257,8 +287,9 @@ function deleteRow() {
                 table.children[i].children[0].id = i;
             }
             getSheets();
-            updateBalance();
             sortRows();
+            updateBalance();
+            updateAccounts();
         }, function(reason) {
             console.error(reason.result.error.message);
         });
@@ -304,6 +335,7 @@ function applyNewRow() {
         updateBalance();
         sortRows();
         setRowColors();
+        updateAccounts();
     }
     else if (newDate.value == "" || (newDate.value != "" && newCredit.value == "" ) || (newDate.value != "" && newDebit == "")) {
         alert("Please input a new date and credit or debit value.");
@@ -380,6 +412,15 @@ function addRadioChange(r) {
 
 function updateBalance() {
     if (table.children.length > 1) {
+        for (i = 1; i < table.children.length; i++) {
+            let prevBalance = 0;
+            if (table.children[i-1].children[0].children[4].innerHTML != "Balance") {
+                prevBalance = parseFloat(table.children[i-1].children[0].children[4].innerHTML);
+            }
+            let c = parseFloat(table.children[i].children[0].children[2].innerHTML);
+            let d = parseFloat(table.children[i].children[0].children[3].innerHTML);
+            table.children[i].children[0].children[4].innerHTML = (c - d + prevBalance);
+        }
         tableBalance.innerHTML = "TOTAL BALANCE: " + table.lastChild.children[0].children[4].innerHTML;
     }
 }

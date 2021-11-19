@@ -39,6 +39,7 @@ function initClient() {
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
         signoutButton.style.display = 'inline-block';
+
         getSheets();
         setTimeout(function() { 
             for (i = 0; i < sheets.length; i++) {

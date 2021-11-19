@@ -254,29 +254,32 @@ function deleteTile() {
     let input = confirm("Are you sure you want to delete this?");
 
     if (input == true) {
-
-        let id = -1;
-
-        for (i = 0; i < sheets.length; i++) {
-            if (sheets[i].properties.title == currentTile.children[0].innerHTML) {
-                id = sheets[i].properties.sheetId;
-                break;
-            }
+        if (sheets.length == 1) {
+            alert("This account can not be deleted. There must be a minimum of one account.");
         }
+        else {
+            let id = -1;
 
-        gapi.client.sheets.spreadsheets.batchUpdate({
-            spreadsheetId: SPREADSHEET_ID,
-            requests: {
-                deleteSheet: {
-                    sheetId: id,
+            for (i = 0; i < sheets.length; i++) {
+                if (sheets[i].properties.title == currentTile.children[0].innerHTML) {
+                    id = sheets[i].properties.sheetId;
+                    break;
                 }
             }
-        })
-        .then((response) => {
-            console.log(response);
-            window.location.reload();
-        });
 
+            gapi.client.sheets.spreadsheets.batchUpdate({
+                spreadsheetId: SPREADSHEET_ID,
+                requests: {
+                    deleteSheet: {
+                        sheetId: id,
+                    }
+                }
+            })
+            .then((response) => {
+                console.log(response);
+                window.location.reload();
+            });
+        }
     }
 }
 
