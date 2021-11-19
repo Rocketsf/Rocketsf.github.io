@@ -26,9 +26,10 @@ body, html {
     margin: auto;
     display: inline-block;
     position: absolute;
-    left: 15px;
-    top: 10px;
-    height: 30px;
+    left: 5px;
+    top: 5px;
+    width: 75px;
+    height: 40px;
     border: none;
     border-radius: 5px;
     background-color: rgb(49, 72, 73);
