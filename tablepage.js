@@ -240,6 +240,8 @@ function addRow() {
     })
     newCredit.value = "";
     newDebit.value = "";
+    newDate.value = "";
+    newParticular.value = "";
 }
 
 function deleteRow() {
