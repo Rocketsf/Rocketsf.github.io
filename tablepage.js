@@ -27,9 +27,20 @@ let currentRow, rowId = 0;
 
 window.onload = function() {
 
-    for (i = 0; i < localStorage.length - 1; i++) {
-        sheetValues.push(JSON.parse(localStorage.getItem("account"+i)));
+    let savedRows = getFromLocal();
+    console.log(savedRows);
+    if (savedRows.length > 0) {
+        
+        for (i = 0; i < savedRows.length; i++) {
+            sheetValues.push(JSON.parse(savedRows[i]));
+        }
     }
+    else {
+        for (i = 0; i < localStorage.length - 1; i++) {
+            sheetValues.push(JSON.parse(localStorage.getItem("account"+i)));
+        }
+    }
+
     console.log(sheetValues);
     sheetValues.sort((a, b) => {
         if (a != null && b != null) {
@@ -47,18 +58,23 @@ window.onload = function() {
 
 }
 
-// function updateAccounts() {
-//     while (accounts.length > 0) accounts.pop();
-//     gapi.client.sheets.spreadsheets.values.get({
-//         spreadsheetId: SPREADSHEET_ID,
-//         range: tileName+"!A:F"
-//     }).then(function (response) {
-//         console.log(response);
-//         console.log("UPDATED ACCOUNT");
-//         accounts.push(response);
-//         localStorage.setItem("account0", JSON.stringify(accounts[0]));
-//     });
-// }
+function saveToLocal() {
+    for (i = 1; i < table.children.length; i++) {
+        console.log(table.children[i]);
+        localStorage.setItem("row"+i, JSON.stringify(table.children[i]));
+    }
+    console.log("saved rows to local")
+   
+}
+
+function getFromLocal() {
+    let r = [];
+    for (i = 1; i < table.children.length; i++) {
+        r.push(localStorage.getItem("row"+i));
+    }
+    console.log("got rows from local");
+    return r;
+}
 
 function init() {
     gapi.client.init({
@@ -87,30 +103,6 @@ function sortRows() {
         table.children[0].remove;
         table.appendChild(sortedRows[i]);
     }
-
-    // setTimeout(function() {
-    //     gapi.client.sheets.spreadsheets.batchUpdate({
-    //         spreadsheetId: SPREADSHEET_ID,
-    //         requests: {
-    //             sortRange: {
-    //                 range: {
-    //                     sheetId: id,
-    //                     startRowIndex: 1,
-    //                     endRowIndex: table.children.length,
-    //                     startColumnIndex: 0,
-    //                     endColumnIndex: 5
-    //                 },
-    //                 sortSpecs: [{
-    //                     sortOrder: "ASCENDING"
-    //                 }]
-    //             }
-    //         }
-    //     })
-    //     .then((response) => {
-    //         console.log("sorted rows");
-    //         console.log(response); 
-    //     })
-    // }, 500);
     
     updateBalance();
 
@@ -165,7 +157,6 @@ function putTableData() {
     table.children[0].children[0].children[1].innerHTML = "Notes";
     table.children[0].children[0].children[1].setAttribute("style", "text-align: center");
     updateBalance();
-    
 }
 
 function openEdit(row, id) {
@@ -189,9 +180,14 @@ function applyEdit() {
     if (credit.value == "" || debitRadio.checked) credit.value = 0;
     if (debit.value == "" || creditRadio.checked) debit.value = 0;
 
+    if (credit.value == 0 && debit.value == 0) {
+        alert("Credit and Debit can not both be 0");
+        return;
+    }
+
     currentRow.children[2].innerHTML = credit.value;
     currentRow.children[3].innerHTML = debit.value;
-
+    
     console.log("credit: "+credit.value+", debit: "+debit.value);
     if (document.getElementById(rowId - 1).children[4].innerHTML != "Balance") {
         currentRow.children[4].innerHTML = (parseFloat(credit.value) - parseFloat(debit.value) + parseFloat(document.getElementById(rowId - 1).children[4].innerHTML));
@@ -213,18 +209,17 @@ function applyEdit() {
     setTimeout(sortRows, 750);
     updateBalance();
     setRowColors();
-    //updateAccounts();
-    
 }
 
 function editRow() {
-    editRowWindow.setAttribute("style", "display: block");
-
-    date.setAttribute("value", currentRow.children[0].innerHTML);
-    particular.setAttribute("value", currentRow.children[1].innerHTML);
-    credit.setAttribute("value", currentRow.children[2].innerHTML);
-    debit.setAttribute("value", currentRow.children[3].innerHTML);
+    date.value = currentRow.children[0].innerHTML;
+    particular.value = currentRow.children[1].innerHTML;
+    if (currentRow.children[2].innerHTML != 0) credit.value = currentRow.children[2].innerHTML;
+    else credit.value = "";
+    if (currentRow.children[3].innerHTML != 0) debit.value = currentRow.children[3].innerHTML;
+    else debit.value = "";
     
+    editRowWindow.setAttribute("style", "display: block");
     console.log(currentRow);
 
     anime({
@@ -335,6 +330,11 @@ function applyNewRow() {
             [newRow.firstChild.childNodes.item(9).innerHTML]], 
             "A"+(table.children.length)+":E"+(table.children.length)
         );
+        
+        newDate.value = "";
+        newParticular.value = "";
+        newCredit.value = "";
+        newDebit.value = "";
 
         closeNewRow();
         sortRows();
@@ -379,7 +379,6 @@ function editRadioChange(r) {
     let dlabel = document.getElementById("debitlabel");
     let cinput = document.getElementById("creditinput");
     let dinput = document.getElementById("debitinput");
-
 
     if (r.value == "chosecredit") {
         clabel.setAttribute("style", "display: inline-block");
@@ -442,4 +441,5 @@ function setRowColors() {
             else table.children[i].setAttribute("style", "background-color: rgb(120,200,145)");
         }
     }
+    saveToLocal();
 }
