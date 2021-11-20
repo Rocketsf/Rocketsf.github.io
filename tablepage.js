@@ -18,10 +18,12 @@ let newParticular = document.getElementById("newparticularinput");
 let credit = document.getElementById("creditinput");
 let newCredit = document.getElementById("addcreditinput");
 let creditRadio = document.getElementById("radiocredit");
+let newCreditRadio = document.getElementById("newradiocredit");
 
 let debit = document.getElementById("debitinput");
 let newDebit = document.getElementById("adddebitinput");
 let debitRadio = document.getElementById("radiodebit");
+let newDebitRadio = document.getElementById("newradiodebit");
 
 let currentRow, rowId = 0;
 
@@ -311,8 +313,8 @@ function applyNewRow() {
         let prevBalance = document.getElementById(table.children.length-1).children[4].innerHTML;
         console.log(prevBalance);
         if (prevBalance == "Balance") prevBalance = 0;
-        if (newCredit.value == "") newCredit.value = 0;
-        if (newDebit.value == "") newDebit.value = 0;
+        if (newCredit.value == "" || newDebitRadio.checked) newCredit.value = 0;
+        if (newDebit.value == "" || newCreditRadio.checked) newDebit.value = 0;
 
         newRow.firstChild.childNodes.item(1).innerHTML = newDate.value;
         newRow.firstChild.childNodes.item(3).innerHTML = newParticular.value;
