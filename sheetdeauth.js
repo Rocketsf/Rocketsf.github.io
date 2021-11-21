@@ -46,8 +46,8 @@ function updateSigninStatus(isSignedIn) {
                 loadData(sheets[i].properties.title);
             }
         }, 1000);
-        
-        setTimeout(function() { openSheet() }, 1500);
+        setTimeout(function() { updateSheetIndexes() }, 1500);
+        setTimeout(function() { openSheet() }, 2000);
         
     } else {
         window.location = "/index.html";

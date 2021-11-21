@@ -51,8 +51,8 @@ function createSheet(titleName) {
             console.log(response); 
         });
         setTimeout(function() { 
-            updateSheet(titleName, [["Date"],["Particular"],["Credit"],["Debit"],["Balance"],[sheets.length + 1]], "A1:F1");
-            window.location.reload(); 
+            updateSheet(titleName, [["Date"],["Particular"],["Credit"],["Debit"],["Balance"],[sheets.length]], "A1:F1");
+            setTimeout(function() { window.location.reload(); }, 1000); 
         }, 1000);
     }
     
@@ -139,9 +139,10 @@ function setTileValues() {
         for (j = 1; j < accounts[i].result.values.length; j++) {
             debit += parseFloat(accounts[i].result.values[j][3]);
         }
-        for (j = 1; j < accounts[i].result.values.length; j++) {
-            balance += parseFloat(accounts[i].result.values[j][4]);
-        }
+        //for (j = 1; j < accounts[i].result.values.length; j++) {
+        if (accounts[i].result.values[accounts[i].result.values.length-1][4] == "Balance") balance = 0;
+        else balance = parseFloat(accounts[i].result.values[accounts[i].result.values.length-1][4]);
+        //}
 
         pageInner.children[i].children[0].textContent = sheets[i].properties.title;
         pageInner.children[i].children[1].textContent = "Credit: " + credit;
@@ -277,10 +278,19 @@ function deleteTile() {
             })
             .then((response) => {
                 console.log(response);
-                window.location.reload();
+                setTimeout(function() { window.location.reload(); }, 1000);
             });
         }
     }
+}
+
+function updateSheetIndexes() {
+    setTimeout(function() {
+        console.log("theres "+sheets.length+" sheets")
+        for (i = 0; i < sheets.length; i++) {
+            updateSheet(sheets[i].properties.title, [[i]], "F1");
+        }
+    },500);
 }
 
 function cancel() {
